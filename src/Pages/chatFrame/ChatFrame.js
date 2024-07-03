@@ -5,10 +5,8 @@ function ChatFrame() {
   const navigate = useNavigate();
   return (
     <>
-      <ListFriends/>
-      <div>
-
-      </div>
+      <ListFriends />
+      <div></div>
     </>
   );
 }
