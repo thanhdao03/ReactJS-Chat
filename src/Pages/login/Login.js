@@ -1,17 +1,13 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import "./Login.scss";
-import { Button, Image, Input, Form, message } from "antd";
-import { useEffect, useState } from "react";
+import { Button, Image, Input, Form } from "antd";
+import { useState } from "react";
 import { apiLogn } from "../../Services/apiConfig";
 import { validateLogin } from "../../Components/Validates";
 function Login() {
   const [acc, setAcc] = useState("daoptc");
   const [pass, setPass] = useState("123");
-  useEffect(() => {
-    return () => {
-      console.log("unmount");
-    };
-  }, []);
+  const navigate = useNavigate();
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateLogin(acc, pass)) {
@@ -26,15 +22,17 @@ function Login() {
       localStorage.setItem("Fullname", data.data.FullName);
       localStorage.setItem("token", data.data.token);
       localStorage.setItem("Username", data.data.Username);
-    } catch {
-      console.log("failed");
-    }
+      navigate("/chat");
+    } catch (e) {}
   };
   return (
     <>
       <div className="body">
         <header className="logo">
-          <Image src={require("../../assets/logo.png")} alt="" />
+          <Image
+            src={require("../../assets/Images/logo.png")}
+            preview={false}
+          />
         </header>
         <div className="content-body">
           <div className="text-all">
@@ -50,7 +48,8 @@ function Login() {
           <div className="image-layout">
             <Image
               className="image1"
-              src={require("../../assets/image1.png")}
+              preview={false}
+              src={require("../../assets/Images/image1.png")}
             ></Image>
           </div>
           <div className="form-login">
@@ -72,6 +71,7 @@ function Login() {
                 onChange={(e) => {
                   setAcc(e.target.value);
                 }}
+                autoComplete="acc"
                 placeholder="Nhập tài khoản"
                 type="text"
                 value={acc}
@@ -83,6 +83,7 @@ function Login() {
                 }}
                 placeholder="**********"
                 type="password"
+                autoComplete="pass"
                 value={pass}
               />
               <p className="remember-pass">
@@ -97,9 +98,18 @@ function Login() {
               </Button>
               <p className="text-lass">Hoặc tiếp tục với</p>
               <div className="logo-login">
-                <Image src={require("../../assets/gg.png")} />
-                <Image src={require("../../assets/fb.png")} />
-                <Image src={require("../../assets/gg.png")} />
+                <Image
+                  src={require("../../assets/Images/gg.png")}
+                  preview={false}
+                />
+                <Image
+                  src={require("../../assets/Images/fb.png")}
+                  preview={false}
+                />
+                <Image
+                  src={require("../../assets/Images/gg.png")}
+                  preview={false}
+                />
               </div>
             </Form>
           </div>

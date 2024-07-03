@@ -1,0 +1,10 @@
+.class-friend {
+  margin-left: 20px;
+  & :hover {
+    background-color: rgb(118, 128, 128);
+    width: 400px;
+  }
+}
+.fullname{
+    font-size: 23px;
+}
