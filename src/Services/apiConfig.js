@@ -1,5 +1,5 @@
 import { message } from "antd";
-import axios, { formToJSON } from "axios";
+import axios from "axios";
 const baseUrl = "http://localhost:8888";
 const getToken = () => {
   const token = localStorage.getItem("token");
@@ -83,5 +83,55 @@ export const apiGetListFriends = async () => {
     return res.data.data;
   } catch (e) {
     console.log(e);
+  }
+};
+export const apiGetMessages = async (friendID, lastTime = null) => {
+  try {
+    const token = getToken();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const url = lastTime
+      ? `${baseUrl}/api/message/get-message?FriendID=${friendID}&LastTime=${lastTime}`
+      : `${baseUrl}/api/message/get-message?FriendID=${friendID}`;
+    const res = await axios.get(url, { headers });
+    if (res.data.status === 1) {
+      return res.data.data;
+    } else {
+      message.error(res.data.message || "Lỗi get tin nhắn");
+      return null;
+    }
+  } catch (e) {
+    console.log(e);
+    return null;
+  }
+};
+export const apiSendMessage = async (friendID, content, file) => {
+  try {
+    const token = getToken();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+    };
+    const formData = new FormData();
+    formData.append("FriendID", friendID);
+    formData.append("Content", content);
+    if (file) {
+      formData.append("files", file);
+    }
+    const res = await axios.post(
+      `${baseUrl}/api/message/send-message`,
+      formData,
+      {
+        headers,
+      }
+    );
+    if (res.data.status === 1) {
+      return res.data.data;
+    } else {
+      message.error(res.data.message || "Lỗi send tin nhắn ");
+    }
+  } catch (e) {
+    console.log(e);
+    return null;
   }
 };

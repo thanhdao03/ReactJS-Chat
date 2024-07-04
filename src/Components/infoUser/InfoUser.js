@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { apiGetInfo, updateUser } from "../../Services/apiConfig";
 import { Button, Form, Input, Upload, Modal, message, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
-import iconUser from "../../assets/Images/face-smile-regular.svg";
+import iconUser from "../../assets/Images/user_face.png";
 function InfoUser() {
   const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);

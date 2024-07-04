@@ -1,8 +1,8 @@
 import { Image, Input, Menu } from "antd";
 import menu from "../../assets/Images/menu.png";
 import { useEffect, useState } from "react";
-import { apiGetInfo, apiGetListFriends } from "../../Services/apiConfig";
-import iconUser from "../../assets/Images/face-smile-regular.svg";
+import { apiGetInfo } from "../../Services/apiConfig";
+import iconUser from "../../assets/Images/user_face.png";
 import icon1 from "../../assets/Images/acong.png";
 import icon3 from "../../assets/Images/group.png";
 import icon4 from "../../assets/Images/night.png";
@@ -98,16 +98,17 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
             >
               <Menu>
                 <Menu.Item key="1">
-                  <div style={{ display: "flex", alignItems: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center",height:'40px' }}>
                     <Image
                       onClick={() => {
                         navigate("/info");
                       }}
                       src={getAvatarUrl(info.Avatar)}
                       style={{
-                        width: "30px",
-                        height: "auto",
+                        width: "40px",
+                        height: "40px",
                         margin: "10px 10px 10px 0px",
+                        borderRadius: "50%",
                       }}
                       preview={false}
                       onError={(e) => {
