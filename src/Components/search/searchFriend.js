@@ -73,12 +73,15 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
           width: "400px",
           height: "40px",
           display: "flex",
-          margin: "10px 10x 10px 0px",
+          margin: "5px 0px 0px 0px",
         }}
       >
         <div>
           <Image
-            style={{ width: "20px", margin: "10px 10px 10px 10px" }}
+            style={{
+              width: "20px",
+              margin: "13px 5px 0px 5px",
+            }}
             preview={false}
             onClick={() => {
               setShow(!show);
@@ -98,7 +101,13 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
             >
               <Menu>
                 <Menu.Item key="1">
-                  <div style={{ display: "flex", alignItems: "center",height:'40px' }}>
+                  <div
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                      height: "40px",
+                    }}
+                  >
                     <Image
                       onClick={() => {
                         navigate("/info");
@@ -143,6 +152,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
           )}
         </div>
         <Input
+          style={{ padding: "10px" }}
           placeholder="Tìm kiếm bạn bè"
           onChange={handleSearch}
           value={search}

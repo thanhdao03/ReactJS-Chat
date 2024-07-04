@@ -7,6 +7,7 @@ import { apiGetMessages, apiSendMessage } from "../../Services/apiConfig";
 import imgSend from "../../assets/Images/sendMSG.png";
 import imgFile from "../../assets/Images/file.png";
 import imgIcon from "../../assets/Images/icon.png";
+import imgSent from "../../assets/Images/sent.png";
 import imgDropdwn from "../../assets/Images/luotxuong.png";
 import EmojiPicker from "emoji-picker-react";
 import { UploadOutlined } from "@ant-design/icons";
@@ -14,14 +15,25 @@ function ChatFrame() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [dropdown, setDropdown] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [fileList, setFileList] = useState([]);
   const baseUrl = "http://localhost:8888";
+  const messagesEndRef = useRef(null);
+  const messagesContainerRef = useRef(null);
   const handleSelectFriend = async (friend) => {
     setSelectedFriend(friend);
     const fetchMessages = await apiGetMessages(friend.FriendID);
-    setMessages(fetchMessages);
+    console.log(fetchMessages);
+    if (fetchMessages === 0) {
+      setMessages();
+    } else {
+      setMessages(fetchMessages);
+      if (messagesContainerRef.current) {
+        messagesContainerRef.current.scrollTop =
+          messagesContainerRef.current.scrollHeight;
+      }
+    }
   };
   const handleSendMessage = async () => {
     if (!newMessage.trim()) return;
@@ -36,11 +48,39 @@ function ChatFrame() {
       setFileList([]);
     }
   };
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+  const handleScroll = () => {
+    if (
+      messagesContainerRef.current.scrollTop <
+      messagesContainerRef.current.scrollHeight -
+        messagesContainerRef.current.clientHeight -
+        100
+    ) {
+      setIsScrolled(true);
+    } else {
+      setIsScrolled(false);
+    }
+  };
+  const scrollToBottom = () => {
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTo({
+        top: messagesContainerRef.current.scrollHeight,
+        behavior: "smooth",
+      });
+    }
+    setIsScrolled(false);
+  };
+
   const getAvatarUrl = (avatar) => {
     return avatar ? `${baseUrl}/api/images/${avatar}` : iconUser;
   };
   const clickEmoji = (event, emojiObject) => {
-    setNewMessage((prev) => prev + emojiObject.emoji);
+    const emoji = emojiObject.emoji;
+    setNewMessage((prev) => prev + emoji);
   };
   const handleUploadChange = ({ fileList }) => {
     setFileList(fileList);
@@ -62,8 +102,8 @@ function ChatFrame() {
                 <Image
                   src={getAvatarUrl(selectedFriend.Avatar)}
                   style={{
-                    width: "35px",
-                    height: "35px",
+                    width: "40px",
+                    height: "40px",
                     margin: "3px 10px 0px 3px",
                     borderRadius: "50%",
                   }}
@@ -87,7 +127,11 @@ function ChatFrame() {
                   {selectedFriend.FullName}
                 </p>
               </div>
-              <div style={{ maxHeight: "90vh", overflow: "auto" }}>
+              <div
+                ref={messagesContainerRef}
+                onScroll={handleScroll}
+                style={{ maxHeight: "88vh", overflow: "auto" }}
+              >
                 <div>
                   {messages.map((msg) => (
                     <div
@@ -110,21 +154,26 @@ function ChatFrame() {
                             margin: "0px 5px 0px 5px",
                           }}
                           preview={false}
+                          onError={(e) => {
+                            e.target.onerror = null;
+                            e.target.src = iconUser;
+                          }}
                         />
                       )}
                       <div
                         style={{
                           backgroundColor:
                             msg.MessageType === 1 ? "#DCF8C6" : "#EED5D5",
-                          padding: "10px",
                           borderRadius: "10px",
                           maxWidth: "60%",
+                          padding: "0px 10px 0px 10px",
                         }}
                       >
                         <p
                           style={{
                             maxWidth: "400px",
                             wordWrap: "break-word",
+                            margin: "10px 0px 5px 0px",
                           }}
                         >
                           {msg.Content}
@@ -137,14 +186,48 @@ function ChatFrame() {
                               style={{ maxWidth: "200px" }}
                             />
                           ))}
-                        <p style={{ fontSize: "12px", color: "#999" }}>
-                          {new Date(msg.CreatedAt).toLocaleString()}
-                        </p>
+                        <div style={{ display: "flex" }}>
+                          <p
+                            style={{
+                              fontSize: "12px",
+                              color: "#999",
+                              margin: "5px 0px 10px 0px",
+                            }}
+                          >
+                            {new Date(msg.CreatedAt).toLocaleString()}
+                          </p>
+                          {msg.MessageType === 1 && (
+                            <Image
+                              preview={false}
+                              src={msg.isSend === 0 ? imgSent : imgSent}
+                              style={{
+                                width: "15px",
+                                margin: "0px 0px 0px 5px",
+                              }}
+                            ></Image>
+                          )}
+                        </div>
                       </div>
                     </div>
                   ))}
+                  <div ref={messagesEndRef} />
                 </div>
               </div>
+              {isScrolled && (
+                <Image
+                  preview={false}
+                  src={imgDropdwn}
+                  style={{
+                    position: "fixed",
+                    bottom: "80px",
+                    right: "10px",
+                    width: "45px",
+                    height: "45px",
+                    cursor: "pointer",
+                  }}
+                  onClick={scrollToBottom}
+                />
+              )}
               <div
                 style={{
                   display: "flex",
@@ -227,20 +310,6 @@ function ChatFrame() {
             <NoMessage />
           )}
         </div>
-        {dropdown && (
-          <Image
-            preview={false}
-            src={imgDropdwn}
-            style={{
-              position: "fixed",
-              right: 20,
-              bottom: 20,
-              cursor: "pointer",
-              width: "40px",
-              height: "40px",
-            }}
-          />
-        )}
       </div>
     </>
   );
