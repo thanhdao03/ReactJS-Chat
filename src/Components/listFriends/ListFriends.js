@@ -4,10 +4,10 @@ import "./ListFriends.scss";
 import SearchFriend from "../search/searchFriend";
 import { Image } from "antd";
 import iconUser from "../../assets/Images/user_face.png";
+import { baseUrl } from "../../Services/apiConfig";
 function ListFriends({ onSelectFriend }) {
   const [listFriend, setListFriend] = useState([]);
   const [filteredFriends, setFilteredFriends] = useState([]);
-  const baseUrl = "http://localhost:8888";
   useEffect(() => {
     const fetchListFriends = async () => {
       try {
@@ -26,7 +26,7 @@ function ListFriends({ onSelectFriend }) {
     fetchListFriends();
   }, []);
   const getAvatarUrl = (avatar) => {
-    return avatar ? `${baseUrl}/api/images/${avatar}` : iconUser;
+    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
   };
   return (
     <>
@@ -45,7 +45,7 @@ function ListFriends({ onSelectFriend }) {
                 className="class-friend"
                 style={{
                   display: "flex",
-                  backgroundColor: "#FBF6E2",
+                  backgroundColor: "#FFFFFF",
                   margin: "2px 0px 0px 0px",
                 }}
                 key={friend.FriendID}
@@ -57,7 +57,7 @@ function ListFriends({ onSelectFriend }) {
                     style={{
                       width: "45px",
                       height: "45px",
-                      margin: "20px 10px 0px 10px",
+                      margin: "18px 10px 0px 10px",
                       borderRadius: "50%",
                     }}
                     preview={false}
@@ -79,19 +79,24 @@ function ListFriends({ onSelectFriend }) {
                 </div>
                 <div className="content-type">
                   <p
-                    style={{ fontSize: "22px", marginTop: "10px" }}
+                    style={{
+                      fontSize: "20px",
+                      marginTop: "20px",
+                      lineHeight: "22px",
+                    }}
                     className="fullname"
                   >
-                    {friend.FullName}
+                    {friend.FullName || "None"}
                   </p>
                   <p
                     style={{
-                      fontSize: "16px",
+                      fontSize: "14px",
                       marginTop: "-20px",
                       textOverflow: "ellipsis",
                       overflow: "hidden",
                       whiteSpace: "nowrap",
-                      maxWidth:"140px"
+                      maxWidth: "140px",
+                      lineHeight:"16px"
                     }}
                   >
                     {friend.Content || "none"}

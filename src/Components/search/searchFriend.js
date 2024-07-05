@@ -8,22 +8,24 @@ import icon3 from "../../assets/Images/group.png";
 import icon4 from "../../assets/Images/night.png";
 import icon5 from "../../assets/Images/profile.png";
 import { useNavigate } from "react-router-dom";
-
+import { baseUrl } from "../../Services/apiConfig";
 function SearchFriend({ listFriend, setFilteredFriends }) {
   const handleSearch = (e) => {
     setSearch(e.target.value);
     const filtered = listFriend.filter((friend) =>
-      friend.FullName.toLowerCase().includes(e.target.value.toLowerCase())
+      (friend.FullName || "")
+        .toLowerCase()
+        .includes(e.target.value.toLowerCase())
     );
     setFilteredFriends(filtered);
   };
+
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const [info, setInfo] = useState("");
-  const baseUrl = "http://localhost:8888";
   const navigate = useNavigate();
   const getAvatarUrl = (avatar) => {
-    const url = avatar ? `${baseUrl}/api/images/${avatar}` : iconUser;
+    const url = avatar ? `${baseUrl}/images/${avatar}` : iconUser;
     return url;
   };
   useEffect(() => {
@@ -152,7 +154,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
           )}
         </div>
         <Input
-          style={{ padding: "10px" }}
+          style={{ padding: "10px",borderRadius:'50px', }}
           placeholder="Tìm kiếm bạn bè"
           onChange={handleSearch}
           value={search}

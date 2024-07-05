@@ -1,6 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
-const baseUrl = "http://localhost:8888";
+// export const baseUrl = "http://localhost:8888/api";
+export const baseUrl = "http://10.2.44.52:8888/api";
 const getToken = () => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -10,7 +11,7 @@ const getToken = () => {
 };
 export const apiRegister = async (userData) => {
   try {
-    const res = await axios.post(`${baseUrl}/api/auth/register`, userData, {
+    const res = await axios.post(`${baseUrl}/auth/register`, userData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -25,7 +26,7 @@ export const apiRegister = async (userData) => {
 };
 export const apiLogn = async (userDataLogin) => {
   try {
-    const res = await axios.post(`${baseUrl}/api/auth/login`, userDataLogin, {
+    const res = await axios.post(`${baseUrl}/auth/login`, userDataLogin, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -46,23 +47,20 @@ export const apiGetInfo = async () => {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    const res = await axios.get(`${baseUrl}/api/user/info`, { headers });
+    const res = await axios.get(`${baseUrl}/user/info`, { headers });
     return res.data.data;
   } catch (e) {
     console.log(e);
   }
 };
-export const updateUser = async (userData) => {
+export const updateUser = async (formData) => {
   try {
     const token = getToken();
     const headers = {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     };
-    const formData = new FormData();
-    for (const key in userData) {
-      formData.append(key, userData[key]);
-    }
-    const res = await axios.post(`${baseUrl}/api/user/update`, formData, {
+    const res = await axios.post(`${baseUrl}/user/update`, formData, {
       headers,
     });
     return res.data;
@@ -77,7 +75,7 @@ export const apiGetListFriends = async () => {
       Authorization: `Bearer ${token}`,
       "Content-Type": "application/json",
     };
-    const res = await axios.get(`${baseUrl}/api/message/list-friend`, {
+    const res = await axios.get(`${baseUrl}/message/list-friend`, {
       headers,
     });
     return res.data.data;
@@ -92,8 +90,8 @@ export const apiGetMessages = async (friendID, lastTime = null) => {
       Authorization: `Bearer ${token}`,
     };
     const url = lastTime
-      ? `${baseUrl}/api/message/get-message?FriendID=${friendID}&LastTime=${lastTime}`
-      : `${baseUrl}/api/message/get-message?FriendID=${friendID}`;
+      ? `${baseUrl}/message/get-message?FriendID=${friendID}&LastTime=${lastTime}`
+      : `${baseUrl}/message/get-message?FriendID=${friendID}`;
     const res = await axios.get(url, { headers });
     if (res.data.status === 1) {
       return res.data.data;
@@ -106,20 +104,25 @@ export const apiGetMessages = async (friendID, lastTime = null) => {
     return null;
   }
 };
-export const apiSendMessage = async (friendID, content, file) => {
+export const apiSendMessage = async (friendID, content, fileList) => {
   try {
     const token = getToken();
     const headers = {
       Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
     };
     const formData = new FormData();
     formData.append("FriendID", friendID);
     formData.append("Content", content);
-    if (file) {
-      formData.append("files", file);
+
+    if (fileList && fileList.length > 0) {
+      fileList.forEach((file) => {
+        formData.append("files", file.originFileObj);
+      });
     }
+
     const res = await axios.post(
-      `${baseUrl}/api/message/send-message`,
+      `${baseUrl}/message/send-message`,
       formData,
       {
         headers,

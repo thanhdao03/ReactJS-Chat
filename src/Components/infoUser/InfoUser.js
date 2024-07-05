@@ -3,6 +3,7 @@ import { apiGetInfo, updateUser } from "../../Services/apiConfig";
 import { Button, Form, Input, Upload, Modal, message, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import iconUser from "../../assets/Images/user_face.png";
+import { baseUrl } from "../../Services/apiConfig";
 function InfoUser() {
   const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);
@@ -36,7 +37,7 @@ function InfoUser() {
       if (imageFile) {
         formData.append("avatar", imageFile);
       }
-      const res = await updateUser(values);
+      const res = await updateUser(formData);
       if (res.status === 1) {
         setUserInfo(res.data);
         message.success("Update success");
@@ -55,13 +56,12 @@ function InfoUser() {
     setIsModal(false);
   };
   const handleImageChange = ({ file, fileList }) => {
-      setFileList(fileList);
-      setImageFile(file.originFileObj);
+    setFileList(fileList);
+    setImageFile(file.originFileObj);
   };
 
-  const baseUrl = "http://localhost:8888";
   const getAvatarUrl = (avatar) => {
-    const url = avatar ? `${baseUrl}/api/images/${avatar}` : iconUser;
+    const url = avatar ? `${baseUrl}/images/${avatar}` : iconUser;
     return url;
   };
   return (

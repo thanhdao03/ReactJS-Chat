@@ -8,6 +8,7 @@ function Login() {
   const [acc, setAcc] = useState("daoptc");
   const [pass, setPass] = useState("123");
   const navigate = useNavigate();
+  console.log('re-render');
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!validateLogin(acc, pass)) {

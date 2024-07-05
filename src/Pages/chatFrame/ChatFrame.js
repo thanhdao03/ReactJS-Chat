@@ -2,15 +2,19 @@ import { useEffect, useState, useRef } from "react";
 import NoMessage from "../../Components/NoMessage/NoMessage";
 import ListFriends from "../../Components/listFriends/ListFriends";
 import iconUser from "../../assets/Images/user_face.png";
-import { Button, Image, Input, Upload } from "antd";
+import { Form, Image, Input, Upload } from "antd";
 import { apiGetMessages, apiSendMessage } from "../../Services/apiConfig";
 import imgSend from "../../assets/Images/sendMSG.png";
 import imgFile from "../../assets/Images/file.png";
 import imgIcon from "../../assets/Images/icon.png";
 import imgSent from "../../assets/Images/sent.png";
+import imgSentt from "../../assets/Images/sentttttttttt.png";
 import imgDropdwn from "../../assets/Images/luotxuong.png";
 import EmojiPicker from "emoji-picker-react";
-import { UploadOutlined } from "@ant-design/icons";
+import { CloseOutlined } from "@ant-design/icons";
+import fileDowload from "../../assets/Images/file-dl.png";
+import { baseUrl } from "../../Services/apiConfig";
+import io from "socket.io-client";
 function ChatFrame() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -18,25 +22,24 @@ function ChatFrame() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [fileList, setFileList] = useState([]);
-  const baseUrl = "http://localhost:8888";
+  const [imageFile, setImageFile] = useState(null);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
+  console.log("re-render");
+  const handleRemoveImage = (file) => {
+    setFileList(fileList.filter((item) => item.uid !== file.uid));
+  };
   const handleSelectFriend = async (friend) => {
     setSelectedFriend(friend);
     const fetchMessages = await apiGetMessages(friend.FriendID);
-    console.log(fetchMessages);
-    if (fetchMessages === 0) {
-      setMessages();
-    } else {
-      setMessages(fetchMessages);
-      if (messagesContainerRef.current) {
-        messagesContainerRef.current.scrollTop =
-          messagesContainerRef.current.scrollHeight;
-      }
+    setMessages(fetchMessages);
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
     }
   };
   const handleSendMessage = async () => {
-    if (!newMessage.trim()) return;
+    if (!newMessage.trim() && fileList.length === 0) return;
     const sentMessage = await apiSendMessage(
       selectedFriend.FriendID,
       newMessage,
@@ -48,6 +51,34 @@ function ChatFrame() {
       setFileList([]);
     }
   };
+  // const socket = io("http://localhost:8888/");
+  // useEffect(() => {
+  //   socket.on("newMessage", (message) => {
+  //     setMessages((prevMessages) => [...prevMessages, message]);
+  //   });
+  //   return () => {
+  //     socket.disconnect();
+  //   };
+  // }, []);
+
+  // const handleSendMessage = () => {
+  //   if (!newMessage.trim() && fileList.length === 0) return;
+
+  //   const files = fileList.map((file) => ({
+  //     name: file.name,
+  //     data: file.originFileObj,
+  //   }));
+
+  //   const message = {
+  //     FriendID: selectedFriend.FriendID,
+  //     Content: newMessage,
+  //     Files: files,
+  //   };
+  //   socket.emit("sendMessage", message);
+  //   setNewMessage("");
+  //   setFileList([]);
+  // };
+
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
@@ -74,16 +105,16 @@ function ChatFrame() {
     }
     setIsScrolled(false);
   };
-
   const getAvatarUrl = (avatar) => {
-    return avatar ? `${baseUrl}/api/images/${avatar}` : iconUser;
+    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
   };
   const clickEmoji = (event, emojiObject) => {
     const emoji = emojiObject.emoji;
     setNewMessage((prev) => prev + emoji);
   };
-  const handleUploadChange = ({ fileList }) => {
+  const handleUploadChange = ({ file, fileList }) => {
     setFileList(fileList);
+    setImageFile(file.originFileObj);
   };
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
@@ -123,8 +154,8 @@ function ChatFrame() {
                     margin: "3px 0px 0px 26px ",
                   }}
                 />
-                <p style={{ margin: "3px 0px 0px 0px", fontSize: "21px" }}>
-                  {selectedFriend.FullName}
+                <p style={{ margin: "5px 0px 0px 0px", fontSize: "21px" }}>
+                  {selectedFriend.FullName || "None"}
                 </p>
               </div>
               <div
@@ -135,7 +166,7 @@ function ChatFrame() {
                 <div>
                   {messages.map((msg) => (
                     <div
-                      key={msg.id}
+                      key={msg._id}
                       style={{
                         display: "flex",
                         flexDirection:
@@ -163,30 +194,63 @@ function ChatFrame() {
                       <div
                         style={{
                           backgroundColor:
-                            msg.MessageType === 1 ? "#DCF8C6" : "#EED5D5",
+                            msg.MessageType === 1 ? "#E0F0FF" : "#E9EAED",
                           borderRadius: "10px",
-                          maxWidth: "60%",
-                          padding: "0px 10px 0px 10px",
+                          maxWidth: "400px",
                         }}
                       >
+                        {msg.Images &&
+                          msg.Images.length > 0 &&
+                          msg.Images.map((img) => {
+                            const imgUrl = `${baseUrl}${img.urlImage}`;
+                            return (
+                              <Image
+                                key={img._id}
+                                src={imgUrl}
+                                style={{
+                                  maxWidth: "200px",
+                                  borderRadius: "10px",
+                                }}
+                              />
+                            );
+                          })}
+                        {msg.Files &&
+                          msg.Files.length > 0 &&
+                          msg.Files.map((file) => {
+                            const fileUrl = `${baseUrl}/${file.urlFile}`;
+                            return (
+                              <a href={fileUrl}>
+                                <Image
+                                  src={fileDowload}
+                                  preview={false}
+                                  style={{
+                                    width: "30px",
+                                    height: "30px",
+                                    margin: "0px 10px 0px 5px",
+                                  }}
+                                />
+                                {file.FileName}
+                              </a>
+                            );
+                          })}
                         <p
                           style={{
                             maxWidth: "400px",
                             wordWrap: "break-word",
                             margin: "10px 0px 5px 0px",
+                            fontSize: "15px",
+                            lineHeight: "17px",
+                            padding: "0px 10px 0px 10px",
                           }}
                         >
                           {msg.Content}
                         </p>
-                        {msg.Images.length > 0 &&
-                          msg.Images.map((img) => (
-                            <Image
-                              key={img._id}
-                              src={`${baseUrl}${img.urlImage}`}
-                              style={{ maxWidth: "200px" }}
-                            />
-                          ))}
-                        <div style={{ display: "flex" }}>
+                        <div
+                          style={{
+                            display: "flex",
+                            padding: "0px 10px 0px 10px",
+                          }}
+                        >
                           <p
                             style={{
                               fontSize: "12px",
@@ -194,12 +258,27 @@ function ChatFrame() {
                               margin: "5px 0px 10px 0px",
                             }}
                           >
-                            {new Date(msg.CreatedAt).toLocaleString()}
+                            {new Date(msg.CreatedAt).toLocaleDateString(
+                              "vi-VN",
+                              {
+                                day: "2-digit",
+                                month: "2-digit",
+                              }
+                            )}{" "}
+                            {new Date(msg.CreatedAt).toLocaleTimeString(
+                              "vi-VN",
+                              {
+                                hour: "2-digit",
+                                minute: "2-digit",
+                                hour12: false,
+                              }
+                            )}
                           </p>
+
                           {msg.MessageType === 1 && (
                             <Image
                               preview={false}
-                              src={msg.isSend === 0 ? imgSent : imgSent}
+                              src={msg.isSend === 0 ? imgSent : imgSentt}
                               style={{
                                 width: "15px",
                                 margin: "0px 0px 0px 5px",
@@ -237,46 +316,98 @@ function ChatFrame() {
                   left: "400px",
                 }}
               >
+                <Form.Item style={{ display: "none" }}>
+                  <Upload
+                    id="file-upload"
+                    listType="picture-card"
+                    fileList={fileList}
+                    beforeUpload={() => false}
+                    onChange={handleUploadChange}
+                    multiple
+                  >
+                    {fileList.length > 0 ? (
+                      <img
+                        src={URL.createObjectURL(fileList[0].originFileObj)}
+                        alt="avatar"
+                        style={{ width: "100%" }}
+                      />
+                    ) : (
+                      <div></div>
+                    )}
+                  </Upload>
+                </Form.Item>
                 <Image
                   preview={false}
                   src={imgFile}
                   style={{
-                    width: "30px",
-                    height: "30px",
-                    margin: "5px",
+                    width: "25px",
+                    height: "25px",
+                    margin: "8px 5px 0px 5px",
                   }}
                   onClick={() => document.getElementById("file-upload").click()}
                 />
-                <Upload
-                  id="file-upload"
-                  fileList={fileList}
-                  onChange={handleUploadChange}
-                  beforeUpload={() => false}
-                  multiple
-                  showUploadList={false}
-                  style={{ display: "none" }}
-                >
-                  <Button
-                    icon={<UploadOutlined />}
-                    style={{ display: "none" }}
-                  />
-                </Upload>
                 <Input.TextArea
                   value={newMessage}
                   onChange={(e) => setNewMessage(e.target.value)}
                   placeholder="Nhập tin nhắn"
-                  style={{ height: "40px" }}
+                  style={{
+                    height: "40px",
+                    position: "relative",
+                    borderRadius: "50px",
+                    padding: "5px",
+                    overflow: "hidden",
+                  }}
                   onKeyDown={handleKeyDown}
                 />
+                {fileList.length > 0 && (
+                  <div
+                    style={{
+                      position: "absolute",
+                      bottom: "60px",
+                      left: "10px",
+                      display: "flex",
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    {fileList.map((file) => (
+                      <div
+                        key={file.uid}
+                        style={{ position: "relative", marginRight: "5px" }}
+                      >
+                        <img
+                          src={URL.createObjectURL(file.originFileObj)}
+                          alt="file preview"
+                          style={{
+                            width: "50px",
+                            height: "50px",
+                            objectFit: "cover",
+                          }}
+                        />
+                        <CloseOutlined
+                          onClick={() => handleRemoveImage(file)}
+                          style={{
+                            position: "absolute",
+                            top: "0px",
+                            right: "0px",
+                            cursor: "pointer",
+                            color: "red",
+                            backgroundColor: "white",
+                            borderRadius: "50%",
+                          }}
+                        />
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <Image
                   preview={false}
                   src={imgIcon}
                   style={{
-                    width: "30px",
-                    height: "30px",
+                    width: "25px",
+                    height: "25px",
                     position: "absolute",
                     right: "10px",
-                    margin: "5px 0px 5px 0px",
+                    margin: "7px 0px 5px 0px",
                   }}
                   onClick={() => {
                     setShowEmoji(!showEmoji);
