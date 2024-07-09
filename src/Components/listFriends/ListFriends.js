@@ -38,7 +38,7 @@ function ListFriends({ onSelectFriend }) {
         {filteredFriends.length > 0 ? (
           <div
             className="list-friends"
-            style={{ maxHeight: "95vh", overflowY: "auto", width: "400px" }}
+            style={{ maxHeight: "95vh", overflowY: "auto", maxWidth: "400px" }}
           >
             {filteredFriends.map((friend) => (
               <div

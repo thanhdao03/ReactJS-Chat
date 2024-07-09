@@ -1,7 +1,7 @@
-import { Link, useNavigate } from "react-router-dom";
-import "../../assets/styles/Login.scss";
 import { Button, Image, Input, Form } from "antd";
 import useLogin from "../../hooks/useLogin";
+import { Link } from "react-router-dom";
+import "../../assets/styles/Login.scss";
 function Login() {
   const { acc, pass, setAcc, setPass, handleSubmit } = useLogin();
   return (

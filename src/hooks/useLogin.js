@@ -1,37 +1,37 @@
-import { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/actions/authAction";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiLogn } from "../Services/api";
-import { validateLogin } from "../utils/Validates";
 
 const useLogin = () => {
   const [acc, setAcc] = useState("daoptc");
   const [pass, setPass] = useState("123");
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!validateLogin(acc, pass)) {
-      return;
-    }
     const userDataLogin = {
       Username: acc,
       Password: pass,
     };
-    try {
-      const data = await apiLogn(userDataLogin);
-      localStorage.setItem("Fullname", data.data.FullName);
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("Username", data.data.Username);
-      navigate("/chat");
-    } catch (e) {}
+    dispatch(login(userDataLogin));
   };
+  useEffect(() => {
+    if (auth.user && !auth.error) {
+      navigate("/chat");
+    }
+  }, [auth, navigate]);
 
   return {
-    acc,    
+    acc,
     pass,
     setAcc,
     setPass,
     handleSubmit,
+    loading: auth.loading,
+    error: auth.error,
   };
 };
 
