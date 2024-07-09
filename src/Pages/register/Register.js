@@ -1,36 +1,23 @@
-import "./Register.scss";
+import "../../assets/styles/Register.scss";
 import { Link } from "react-router-dom";
 import { Button, Image, Input, Form } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import { apiRegister } from "../../Services/apiConfig";
+import { apiRegister } from "../../Services/api";
 import { validateRegister } from "../../utils/Validates";
+import useRegister from "../../hooks/useRegister";
 function Register() {
-  const [fullname, setFullname] = useState("");
-  const [acc, setAcc] = useState("");
-  const [pass, setPass] = useState("");
-  const [confirmPass, setConfirmPass] = useState("");
-  const navigate = useNavigate();
-  const handleRegister = async (e) => {
-    e.preventDefault();
-    if (!validateRegister(fullname, acc, pass, confirmPass)) {
-      return;
-    }
-    const userData = {
-      FullName: fullname,
-      Username: acc,
-      Password: pass,
-    };
-    try {
-      const data = await apiRegister(userData);
-      localStorage.setItem("Fullname", data.data.FullName);
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("Username", data.data.Username);
-      navigate("/login");
-    } catch (e) {
-      console.log(e);
-    }
-  };
+  const {
+    fullname,
+    acc,
+    pass,
+    confirmPass,
+    setFullname,
+    setAcc,
+    setPass,
+    setConfirmPass,
+    handleRegister,
+  } = useRegister();
   return (
     <>
       <div className="body">
@@ -50,15 +37,25 @@ function Register() {
           </div>
           <div className="form-register">
             <div className="form-login-header">
-              <select>
+              <select
+                style={{
+                  height: "30px",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
                 <option>Tiếng Việt</option>
                 <option>Tiếng Anh</option>
               </select>
               <p>
-                <Link to="/login">Đăng nhập</Link>
+                <Link style={{ textDecoration: "none" }} to="/">
+                  Đăng nhập
+                </Link>
               </p>
               <p>
-                <Link to="/signup">Đăng ký</Link>
+                <Link style={{ textDecoration: "none" }} to="/signup">
+                  Đăng ký
+                </Link>
               </p>
             </div>
             <p className="text-register">Đăng ký</p>
@@ -114,7 +111,7 @@ function Register() {
                 Đăng ký
               </Button>
               <p className="text-lass-register">
-                Đã có tài khoản, đăng nhập tại <Link to="/login">đây!</Link>
+                Đã có tài khoản, đăng nhập tại <Link to="/">đây!</Link>
               </p>
             </Form>
           </div>

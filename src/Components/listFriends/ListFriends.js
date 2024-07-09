@@ -1,13 +1,15 @@
 import { useEffect, useState } from "react";
-import { apiGetListFriends } from "../../Services/apiConfig";
-import "./ListFriends.scss";
+import { apiGetListFriends } from "../../Services/api";
 import SearchFriend from "../search/searchFriend";
 import { Image } from "antd";
 import iconUser from "../../assets/Images/user_face.png";
-import { baseUrl } from "../../Services/apiConfig";
+import { baseUrl } from "../../Services/api";
 function ListFriends({ onSelectFriend }) {
   const [listFriend, setListFriend] = useState([]);
   const [filteredFriends, setFilteredFriends] = useState([]);
+  const getAvatarUrl = (avatar) => {
+    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
+  };
   useEffect(() => {
     const fetchListFriends = async () => {
       try {
@@ -25,9 +27,7 @@ function ListFriends({ onSelectFriend }) {
     };
     fetchListFriends();
   }, []);
-  const getAvatarUrl = (avatar) => {
-    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
-  };
+
   return (
     <>
       <div style={{ maxHeight: "100vh", overflow: "hidden" }}>

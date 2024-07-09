@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import { apiGetInfo, updateUser } from "../../Services/apiConfig";
+import { apiGetInfo, updateUser } from "../../Services/api";
 import { Button, Form, Input, Upload, Modal, message, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import iconUser from "../../assets/Images/user_face.png";
-import { baseUrl } from "../../Services/apiConfig";
+import { baseUrl } from "../../Services/api";
 function InfoUser() {
   const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);

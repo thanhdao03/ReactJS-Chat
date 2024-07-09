@@ -1,7 +1,7 @@
 import { message } from "antd";
 import axios from "axios";
-// export const baseUrl = "http://localhost:8888/api";
-export const baseUrl = "http://10.2.44.52:8888/api";
+export const baseUrl = "http://localhost:8888/api";
+// export const baseUrl = "http://10.2.44.52:8888/api";
 const getToken = () => {
   const token = localStorage.getItem("token");
   if (!token) {
@@ -37,6 +37,8 @@ export const apiLogn = async (userDataLogin) => {
     if (e.message) {
       message.error(e.message);
     }
+    throw e;
+    
   }
 };
 
@@ -85,7 +87,7 @@ export const apiGetListFriends = async () => {
 };
 export const apiGetMessages = async (friendID, lastTime = null) => {
   try {
-    const token = getToken(); 
+    const token = getToken();
     const headers = {
       Authorization: `Bearer ${token}`,
     };
@@ -121,13 +123,9 @@ export const apiSendMessage = async (friendID, content, fileList) => {
       });
     }
 
-    const res = await axios.post(
-      `${baseUrl}/message/send-message`,
-      formData,
-      {
-        headers,
-      }
-    );
+    const res = await axios.post(`${baseUrl}/message/send-message`, formData, {
+      headers,
+    });
     if (res.data.status === 1) {
       return res.data.data;
     } else {

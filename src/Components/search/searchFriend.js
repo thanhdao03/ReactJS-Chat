@@ -1,15 +1,23 @@
 import { Image, Input, Menu } from "antd";
 import menu from "../../assets/Images/menu.png";
 import { useEffect, useState } from "react";
-import { apiGetInfo } from "../../Services/apiConfig";
+import { apiGetInfo } from "../../Services/api";
 import iconUser from "../../assets/Images/user_face.png";
 import icon1 from "../../assets/Images/acong.png";
 import icon3 from "../../assets/Images/group.png";
 import icon4 from "../../assets/Images/night.png";
 import icon5 from "../../assets/Images/profile.png";
 import { useNavigate } from "react-router-dom";
-import { baseUrl } from "../../Services/apiConfig";
+import { baseUrl } from "../../Services/api";
 function SearchFriend({ listFriend, setFilteredFriends }) {
+  const [search, setSearch] = useState("");
+  const [show, setShow] = useState(false);
+  const [info, setInfo] = useState("");
+  const navigate = useNavigate();
+  const getAvatarUrl = (avatar) => {
+    const url = avatar ? `${baseUrl}/images/${avatar}` : iconUser;
+    return url;
+  };
   const handleSearch = (e) => {
     setSearch(e.target.value);
     const filtered = listFriend.filter((friend) =>
@@ -18,15 +26,6 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
         .includes(e.target.value.toLowerCase())
     );
     setFilteredFriends(filtered);
-  };
-
-  const [search, setSearch] = useState("");
-  const [show, setShow] = useState(false);
-  const [info, setInfo] = useState("");
-  const navigate = useNavigate();
-  const getAvatarUrl = (avatar) => {
-    const url = avatar ? `${baseUrl}/images/${avatar}` : iconUser;
-    return url;
   };
   useEffect(() => {
     const fetchUser = async () => {
@@ -47,7 +46,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
   }, [navigate]);
   const handleLogout = () => {
     localStorage.removeItem("token");
-    window.location.href = "/login";
+    window.location.href = "/";
   };
   const menuItems = [
     {
@@ -154,7 +153,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
           )}
         </div>
         <Input
-          style={{ padding: "10px",borderRadius:'50px', }}
+          style={{ padding: "10px", borderRadius: "50px" }}
           placeholder="Tìm kiếm bạn bè"
           onChange={handleSearch}
           value={search}

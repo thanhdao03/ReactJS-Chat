@@ -3,7 +3,7 @@ import NoMessage from "../../Components/NoMessage/NoMessage";
 import ListFriends from "../../Components/listFriends/ListFriends";
 import iconUser from "../../assets/Images/user_face.png";
 import { Form, Image, Input, Upload } from "antd";
-import { apiGetMessages, apiSendMessage } from "../../Services/apiConfig";
+import { apiGetMessages, apiSendMessage } from "../../Services/api";
 import imgSend from "../../assets/Images/sendMSG.png";
 import imgFile from "../../assets/Images/file.png";
 import imgIcon from "../../assets/Images/icon.png";
@@ -13,7 +13,7 @@ import imgDropdwn from "../../assets/Images/luotxuong.png";
 import EmojiPicker from "emoji-picker-react";
 import { CloseOutlined } from "@ant-design/icons";
 import fileDowload from "../../assets/Images/file-dl.png";
-import { baseUrl } from "../../Services/apiConfig";
+import { baseUrl } from "../../Services/api";
 import io from "socket.io-client";
 function ChatFrame() {
   const [selectedFriend, setSelectedFriend] = useState(null);

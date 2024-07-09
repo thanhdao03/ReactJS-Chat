@@ -1,31 +1,9 @@
 import { Link, useNavigate } from "react-router-dom";
-import "./Login.scss";
+import "../../assets/styles/Login.scss";
 import { Button, Image, Input, Form } from "antd";
-import { useState } from "react";
-import { apiLogn } from "../../Services/apiConfig";
-import { validateLogin } from "../../utils/Validates";
+import useLogin from "../../hooks/useLogin";
 function Login() {
-  const [acc, setAcc] = useState("daoptc");
-  const [pass, setPass] = useState("123");
-  const navigate = useNavigate();
-  console.log('re-render');
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!validateLogin(acc, pass)) {
-      return;
-    }
-    const userDataLogin = {
-      Username: acc,
-      Password: pass,
-    };
-    try {
-      const data = await apiLogn(userDataLogin);
-      localStorage.setItem("Fullname", data.data.FullName);
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("Username", data.data.Username);
-      navigate("/chat");
-    } catch (e) {}
-  };
+  const { acc, pass, setAcc, setPass, handleSubmit } = useLogin();
   return (
     <>
       <div className="body">
@@ -55,15 +33,25 @@ function Login() {
           </div>
           <div className="form-login">
             <div className="form-login-header">
-              <select>
+              <select
+                style={{
+                  height: "30px",
+                  justifyContent: "center",
+                  marginTop: "10px",
+                }}
+              >
                 <option>Tiếng Việt</option>
                 <option>Tiếng Anh</option>
               </select>
               <p>
-                <Link to="/login">Đăng nhập</Link>
+                <Link style={{ textDecoration: "none" }} to="/">
+                  Đăng nhập
+                </Link>
               </p>
               <p>
-                <Link to="/signup">Đăng ký</Link>
+                <Link style={{ textDecoration: "none" }} to="/signup">
+                  Đăng ký
+                </Link>
               </p>
             </div>
             <Form className="form-login-post" method="POST" type="submit">
