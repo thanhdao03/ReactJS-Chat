@@ -22,6 +22,7 @@ function InfoUser() {
     };
     fetchUser();
   }, [form]);
+
   const showModal = () => {
     setIsModal(true);
     form.setFieldValue(userInfo);

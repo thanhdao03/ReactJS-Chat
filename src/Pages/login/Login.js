@@ -3,7 +3,7 @@ import "./Login.scss";
 import { Button, Image, Input, Form } from "antd";
 import { useState } from "react";
 import { apiLogn } from "../../Services/apiConfig";
-import { validateLogin } from "../../Components/Validates";
+import { validateLogin } from "../../utils/Validates";
 function Login() {
   const [acc, setAcc] = useState("daoptc");
   const [pass, setPass] = useState("123");

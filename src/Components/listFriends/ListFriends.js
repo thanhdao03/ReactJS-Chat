@@ -96,7 +96,7 @@ function ListFriends({ onSelectFriend }) {
                       overflow: "hidden",
                       whiteSpace: "nowrap",
                       maxWidth: "140px",
-                      lineHeight:"16px"
+                      lineHeight: "16px",
                     }}
                   >
                     {friend.Content || "none"}

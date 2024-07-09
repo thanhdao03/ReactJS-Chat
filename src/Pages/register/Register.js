@@ -4,7 +4,7 @@ import { Button, Image, Input, Form } from "antd";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { apiRegister } from "../../Services/apiConfig";
-import { validateRegister } from "../../Components/Validates";
+import { validateRegister } from "../../utils/Validates";
 function Register() {
   const [fullname, setFullname] = useState("");
   const [acc, setAcc] = useState("");

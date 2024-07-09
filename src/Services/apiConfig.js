@@ -85,7 +85,7 @@ export const apiGetListFriends = async () => {
 };
 export const apiGetMessages = async (friendID, lastTime = null) => {
   try {
-    const token = getToken();
+    const token = getToken(); 
     const headers = {
       Authorization: `Bearer ${token}`,
     };
