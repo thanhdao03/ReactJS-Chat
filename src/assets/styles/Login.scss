@@ -1,0 +1,78 @@
+.body {
+  font-family: "Roboto";
+}
+.logo {
+  width: 100px;
+  height: 40px;
+  margin: 10px 10px;
+}
+.image1 {
+  max-width: 480px;
+  max-height: 456px;
+  margin-left: 200px;
+  margin-top: 100px;
+}
+.text-first {
+  font-size: 58px;
+  line-height: 77px;
+}
+.text-second {
+  font-size: 23px;
+  list-style: 60px;
+}
+.content-body {
+  display: flex;
+}
+.form-login {
+  max-width: 40%;
+  margin: 50px 10px 0px 200px;
+}
+.image-layout {
+  max-width: 30%;
+}
+.form-login-header {
+  display: flex;
+  margin: 10px 10px;
+  gap: 10px;
+  margin-bottom: 150px;
+  font-size: 17px;
+  & :hover {
+    color: #5186c2;
+  }
+}
+.logo-login {
+  width: 400px;
+  gap: 10px;
+  display: flex;
+  margin-top: 40px;
+  margin-left: 10px;
+}
+.text-all {
+  margin-left: 200px;
+  margin-top: 100px;
+  max-width: 30%;
+}
+.form-input {
+  padding: 10px;
+  margin: 10px 10px;
+  max-width: 400px;
+  max-height: 60px;
+  background-color: #eaf0f7;
+}
+.remember-pass {
+  align-items: flex-end;
+  position: relative;
+  margin-left: 300px;
+}
+.form-btn-login {
+  width: 400px;
+  margin: 10px 10px;
+  padding: 10px;
+  background-color: #4096ff;
+  border-radius: 10px;
+  height: 50px;
+  margin-top: 30px;
+}
+.text-lass {
+  text-align: center;
+}
