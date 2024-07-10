@@ -7,7 +7,7 @@ const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,
   friends: friendsReducer,
-  messages: messagesReducer,
+  chat: messagesReducer,
 });
 
 export default rootReducer;

@@ -1,19 +1,21 @@
 import { useEffect, useState, useRef } from "react";
 import NoMessage from "../../Components/NoMessage/NoMessage";
 import ListFriends from "../../Components/listFriends/ListFriends";
-import iconUser from "../../assets/Images/user_face.png";
 import { Form, Image, Input, Upload } from "antd";
 import { apiGetMessages, apiSendMessage } from "../../Services/api";
+import iconUser from "../../assets/Images/user_face.png";
 import imgSend from "../../assets/Images/sendMSG.png";
 import imgFile from "../../assets/Images/file.png";
 import imgIcon from "../../assets/Images/icon.png";
 import imgSent from "../../assets/Images/sent.png";
 import imgSentt from "../../assets/Images/sentttttttttt.png";
 import imgDropdwn from "../../assets/Images/luotxuong.png";
+import fileDowload from "../../assets/Images/file-dl.png";
 import EmojiPicker from "emoji-picker-react";
 import { CloseOutlined } from "@ant-design/icons";
-import fileDowload from "../../assets/Images/file-dl.png";
 import { baseUrl } from "../../Services/api";
+import { getMessages, sendMessage } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -24,7 +26,8 @@ function Chat() {
   const [imageFile, setImageFile] = useState(null);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
-  console.log("re-render");
+  const dispatch = useDispatch();
+
   const handleRemoveImage = (file) => {
     setFileList(fileList.filter((item) => item.uid !== file.uid));
   };

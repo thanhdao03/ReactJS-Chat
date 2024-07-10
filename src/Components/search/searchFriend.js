@@ -14,6 +14,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const info = useSelector((state) => state.user.userInfo);
+  console.log(info);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const getAvatarUrl = (avatar) => {
