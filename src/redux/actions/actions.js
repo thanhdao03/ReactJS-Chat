@@ -51,6 +51,22 @@ export const updateUser = (formData) => async (dispatch) => {
     message.error(e.message);
   }
 };
+// Get list friends action
+export const getListFriends = () => async (dispatch) => {
+  dispatch({ type: GET_LIST_FRIENDS_REQUEST });
+  try {
+    const token = getToken();
+    const headers = {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "application/json",
+    };
+    const res = await axios.get(`${baseUrl}/message/list-friend`, { headers });
+    dispatch({ type: GET_LIST_FRIENDS_SUCCESS, payload: res.data.data });
+  } catch (e) {
+    dispatch({ type: GET_LIST_FRIENDS_FAILURE, payload: e.message });
+  }
+};
+
 export const sendMessage = (messageData) => async (dispatch) => {
   dispatch({ type: SEND_MESSAGE_REQUEST });
   try {
@@ -83,21 +99,5 @@ export const getMessages = () => async (dispatch) => {
     dispatch({ type: GET_MESSAGES_SUCCESS, payload: res.data });
   } catch (e) {
     dispatch({ type: GET_MESSAGES_FAILURE, payload: e.message });
-  }
-};
-
-// Get list friends action
-export const getListFriends = () => async (dispatch) => {
-  dispatch({ type: GET_LIST_FRIENDS_REQUEST });
-  try {
-    const token = getToken();
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
-    const res = await axios.get(`${baseUrl}/message/list-friend`, { headers });
-    dispatch({ type: GET_LIST_FRIENDS_SUCCESS, payload: res.data.data });
-  } catch (e) {
-    dispatch({ type: GET_LIST_FRIENDS_FAILURE, payload: e.message });
   }
 };

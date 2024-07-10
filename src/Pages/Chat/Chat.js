@@ -14,7 +14,6 @@ import EmojiPicker from "emoji-picker-react";
 import { CloseOutlined } from "@ant-design/icons";
 import fileDowload from "../../assets/Images/file-dl.png";
 import { baseUrl } from "../../Services/api";
-// import io from "socket.io-client";
 function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [messages, setMessages] = useState([]);
@@ -51,34 +50,6 @@ function Chat() {
       setFileList([]);
     }
   };
-  // const socket = io("http://localhost:8888/");
-  // useEffect(() => {
-  //   socket.on("newMessage", (message) => {
-  //     setMessages((prevMessages) => [...prevMessages, message]);
-  //   });
-  //   return () => {
-  //     socket.disconnect();
-  //   };
-  // }, []);
-
-  // const handleSendMessage = () => {
-  //   if (!newMessage.trim() && fileList.length === 0) return;
-
-  //   const files = fileList.map((file) => ({
-  //     name: file.name,
-  //     data: file.originFileObj,
-  //   }));
-
-  //   const message = {
-  //     FriendID: selectedFriend.FriendID,
-  //     Content: newMessage,
-  //     Files: files,
-  //   };
-  //   socket.emit("sendMessage", message);
-  //   setNewMessage("");
-  //   setFileList([]);
-  // };
-
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });

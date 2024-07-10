@@ -1,41 +1,44 @@
 import { useEffect, useState } from "react";
-import { apiGetListFriends } from "../../Services/api";
 import SearchFriend from "../search/searchFriend";
 import { Image } from "antd";
 import iconUser from "../../assets/Images/user_face.png";
 import { baseUrl } from "../../Services/api";
+import { getListFriends } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
+
 function ListFriends({ onSelectFriend }) {
-  const [listFriend, setListFriend] = useState([]);
+  const dispatch = useDispatch();
+  const { friends, loading, error } = useSelector((state) => state.friends);
   const [filteredFriends, setFilteredFriends] = useState([]);
   const getAvatarUrl = (avatar) => {
     return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
   };
   useEffect(() => {
-    const fetchListFriends = async () => {
-      try {
-        const data = await apiGetListFriends();
-        const sortedData = data.sort((a, b) => {
-          if (a.FullName < b.FullName) return -1;
-          if (a.FullName > b.FullName) return 1;
-          return 0;
-        });
-        setListFriend(sortedData);
-        setFilteredFriends(sortedData);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchListFriends();
-  }, []);
+    dispatch(getListFriends());
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (friends.length > 0) {
+      const sortedData = friends.sort((a, b) => {
+        if (a.FullName < b.FullName) return -1;
+        if (a.FullName > b.FullName) return 1;
+        return 0;
+      });
+      setFilteredFriends(sortedData);
+    }
+  }, [friends]);
   return (
     <>
       <div style={{ maxHeight: "100vh", overflow: "hidden" }}>
         <SearchFriend
-          listFriend={listFriend}
+          listFriend={friends}
           setFilteredFriends={setFilteredFriends}
         />
-        {filteredFriends.length > 0 ? (
+        {loading ? (
+          <p>Loading...</p>
+        ) : error ? (
+          <p>{error}</p>
+        ) : filteredFriends.length > 0 ? (
           <div
             className="list-friends"
             style={{ maxHeight: "95vh", overflowY: "auto", maxWidth: "400px" }}

@@ -1,7 +1,8 @@
 import { Image, Input, Menu } from "antd";
 import menu from "../../assets/Images/menu.png";
 import { useEffect, useState } from "react";
-import { apiGetInfo } from "../../Services/api";
+import { getInfo } from "../../redux/actions/actions";
+import { useDispatch, useSelector } from "react-redux";
 import iconUser from "../../assets/Images/user_face.png";
 import icon1 from "../../assets/Images/acong.png";
 import icon3 from "../../assets/Images/group.png";
@@ -12,11 +13,11 @@ import { baseUrl } from "../../Services/api";
 function SearchFriend({ listFriend, setFilteredFriends }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
-  const [info, setInfo] = useState("");
+  const info = useSelector((state) => state.user.userInfo);
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const getAvatarUrl = (avatar) => {
-    const url = avatar ? `${baseUrl}/images/${avatar}` : iconUser;
-    return url;
+    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
   };
   const handleSearch = (e) => {
     setSearch(e.target.value);
@@ -28,17 +29,8 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
     setFilteredFriends(filtered);
   };
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const data = await apiGetInfo();
-        setInfo(data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchUser();
-  }, []);
+    dispatch(getInfo());
+  }, [dispatch]);
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/");

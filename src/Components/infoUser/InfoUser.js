@@ -1,40 +1,31 @@
 import { useEffect, useState } from "react";
-// import { apiGetInfo, updateUser } from "../../Services/api";
 import { getInfo, updateUser } from "../../redux/actions/actions";
 import { Button, Form, Input, Upload, Modal, message, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import iconUser from "../../assets/Images/user_face.png";
 import { baseUrl } from "../../Services/api";
 import { useDispatch, useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 function InfoUser() {
-  // const [userInfo, setUserInfo] = useState(null);
+  const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState(null);
   const [fileList, setFileList] = useState([]);
   const dispatch = useDispatch();
-  const { userInfo, loading } = useSelector((state) => state.user);
-  // useEffect(() => {
-  //   const fetchUser = async () => {
-  //     try {
-  //       const data = await apiGetInfo();
-  //       setUserInfo(data);
-  //       form.setFieldValue(data);
-  //     } catch (e) {
-  //       console.log(e);
-  //     }
-  //   };
-  //   fetchUser();
-  // }, [form]);
+  const user = useSelector((state) => state.user);
+  const navigate = useNavigate();
   useEffect(() => {
     dispatch(getInfo());
   }, [dispatch]);
 
   useEffect(() => {
-    if (userInfo) {
-      form.setFieldsValue(userInfo);
+    if (user.userInfo) {
+      setUserInfo(user.userInfo);
+      form.setFieldsValue(user.userInfo);
     }
-  }, [userInfo, form]);
+  }, [user.userInfo, form]);
+
   const showModal = () => {
     setIsModal(true);
     form.setFieldValue(userInfo);
@@ -50,9 +41,9 @@ function InfoUser() {
       if (imageFile) {
         formData.append("avatar", imageFile);
       }
-      await dispatch(updateUser(formData));
-      dispatch(getInfo());
+      dispatch(updateUser(formData));
       setIsModal(false);
+      navigate("/chat");
     } catch (e) {
       console.log(e);
       message.error("Update failed");
