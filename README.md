@@ -1,2 +1,2 @@
-React App
+Redux-Chat
 
