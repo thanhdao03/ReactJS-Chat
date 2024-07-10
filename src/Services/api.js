@@ -2,46 +2,13 @@ import { message } from "antd";
 import axios from "axios";
 export const baseUrl = "http://localhost:8888/api";
 // export const baseUrl = "http://10.2.44.52:8888/api";
-const getToken = () => {
+export const getToken = () => {
   const token = localStorage.getItem("token");
   if (!token) {
     console.log("chua luu token");
   }
   return token;
 };
-export const apiRegister = async (userData) => {
-  try {
-    const res = await axios.post(`${baseUrl}/auth/register`, userData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    message.success("success");
-    return res.data;
-  } catch (e) {
-    if (e.message) {
-      message.error(e.message);
-    }
-  }
-};
-export const apiLogn = async (userDataLogin) => {
-  try {
-    const res = await axios.post(`${baseUrl}/auth/login`, userDataLogin, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    message.success("success");
-    return res.data;
-  } catch (e) {
-    if (e.message) {
-      message.error(e.message);
-    }
-    throw e;
-    
-  }
-};
-
 export const apiGetInfo = async () => {
   try {
     const token = getToken();

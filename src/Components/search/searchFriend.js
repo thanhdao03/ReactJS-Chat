@@ -41,7 +41,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
   }, []);
   useEffect(() => {
     if (!localStorage.getItem("token")) {
-      navigate("/login");
+      navigate("/");
     }
   }, [navigate]);
   const handleLogout = () => {

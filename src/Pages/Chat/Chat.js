@@ -14,8 +14,8 @@ import EmojiPicker from "emoji-picker-react";
 import { CloseOutlined } from "@ant-design/icons";
 import fileDowload from "../../assets/Images/file-dl.png";
 import { baseUrl } from "../../Services/api";
-import io from "socket.io-client";
-function ChatFrame() {
+// import io from "socket.io-client";
+function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -445,4 +445,4 @@ function ChatFrame() {
     </>
   );
 }
-export default ChatFrame;
+export default Chat;

@@ -1,28 +1,40 @@
 import { useEffect, useState } from "react";
-import { apiGetInfo, updateUser } from "../../Services/api";
+// import { apiGetInfo, updateUser } from "../../Services/api";
+import { getInfo, updateUser } from "../../redux/actions/actions";
 import { Button, Form, Input, Upload, Modal, message, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import iconUser from "../../assets/Images/user_face.png";
 import { baseUrl } from "../../Services/api";
+import { useDispatch, useSelector } from "react-redux";
 function InfoUser() {
-  const [userInfo, setUserInfo] = useState(null);
+  // const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const [form] = Form.useForm();
   const [imageFile, setImageFile] = useState(null);
   const [fileList, setFileList] = useState([]);
+  const dispatch = useDispatch();
+  const { userInfo, loading } = useSelector((state) => state.user);
+  // useEffect(() => {
+  //   const fetchUser = async () => {
+  //     try {
+  //       const data = await apiGetInfo();
+  //       setUserInfo(data);
+  //       form.setFieldValue(data);
+  //     } catch (e) {
+  //       console.log(e);
+  //     }
+  //   };
+  //   fetchUser();
+  // }, [form]);
   useEffect(() => {
-    const fetchUser = async () => {
-      try {
-        const data = await apiGetInfo();
-        setUserInfo(data);
-        form.setFieldValue(data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-    fetchUser();
-  }, [form]);
+    dispatch(getInfo());
+  }, [dispatch]);
 
+  useEffect(() => {
+    if (userInfo) {
+      form.setFieldsValue(userInfo);
+    }
+  }, [userInfo, form]);
   const showModal = () => {
     setIsModal(true);
     form.setFieldValue(userInfo);
@@ -38,15 +50,8 @@ function InfoUser() {
       if (imageFile) {
         formData.append("avatar", imageFile);
       }
-      const res = await updateUser(formData);
-      if (res.status === 1) {
-        setUserInfo(res.data);
-        message.success("Update success");
-        const data = await apiGetInfo();
-        setUserInfo(data);
-      } else {
-        message.error("Update failed");
-      }
+      await dispatch(updateUser(formData));
+      dispatch(getInfo());
       setIsModal(false);
     } catch (e) {
       console.log(e);

@@ -1,13 +1,15 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { apiRegister } from "../Services/api";
 import { validateRegister } from "../utils/Validates";
-
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/actions/authAction";
 const useRegister = () => {
   const [fullname, setFullname] = useState("");
   const [acc, setAcc] = useState("");
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+  const dispatch = useDispatch();
+  const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();
 
   const handleRegister = async (e) => {
@@ -20,17 +22,14 @@ const useRegister = () => {
       Username: acc,
       Password: pass,
     };
-    try {
-      const data = await apiRegister(userData);
-      localStorage.setItem("Fullname", data.data.FullName);
-      localStorage.setItem("token", data.data.token);
-      localStorage.setItem("Username", data.data.Username);
-      navigate("/");
-    } catch (e) {
-      console.log(e);
-    }
+    dispatch(register(userData));
   };
 
+  useEffect(() => {
+    if (auth.user && !auth.error) {
+      navigate("/chat");
+    }
+  }, [auth, navigate]);
   return {
     fullname,
     acc,

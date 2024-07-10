@@ -1,10 +1,6 @@
 import "../../assets/styles/Register.scss";
 import { Link } from "react-router-dom";
 import { Button, Image, Input, Form } from "antd";
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
-import { apiRegister } from "../../Services/api";
-import { validateRegister } from "../../utils/Validates";
 import useRegister from "../../hooks/useRegister";
 function Register() {
   const {
