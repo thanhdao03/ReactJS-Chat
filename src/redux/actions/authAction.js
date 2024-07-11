@@ -8,7 +8,8 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-} from "./actionTypes";
+} from "./types";
+
 export const login = (userDataLogin) => async (dispatch) => {
   dispatch({ type: LOGIN_REQUEST });
   try {

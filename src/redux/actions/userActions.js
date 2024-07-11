@@ -17,8 +17,10 @@ import {
   GET_LIST_FRIENDS_REQUEST,
   GET_LIST_FRIENDS_SUCCESS,
   GET_LIST_FRIENDS_FAILURE,
-} from "./actionTypes";
+} from "./types";
+
 import { getToken } from "../../Services/api";
+
 export const getInfo = () => async (dispatch) => {
   dispatch({ type: GET_INFO_REQUEST });
   try {
@@ -31,8 +33,10 @@ export const getInfo = () => async (dispatch) => {
     dispatch({ type: GET_INFO_SUCCESS, payload: res.data.data });
   } catch (e) {
     dispatch({ type: GET_INFO_FAILURE, payload: e.message });
+    message.error(e.message);
   }
 };
+
 export const updateUser = (formData) => async (dispatch) => {
   dispatch({ type: UPDATE_USER_REQUEST });
   try {
@@ -51,7 +55,7 @@ export const updateUser = (formData) => async (dispatch) => {
     message.error(e.message);
   }
 };
-// Get list friends action
+
 export const getListFriends = () => async (dispatch) => {
   dispatch({ type: GET_LIST_FRIENDS_REQUEST });
   try {
@@ -64,40 +68,59 @@ export const getListFriends = () => async (dispatch) => {
     dispatch({ type: GET_LIST_FRIENDS_SUCCESS, payload: res.data.data });
   } catch (e) {
     dispatch({ type: GET_LIST_FRIENDS_FAILURE, payload: e.message });
-  }
-};
-
-export const sendMessage = (messageData) => async (dispatch) => {
-  dispatch({ type: SEND_MESSAGE_REQUEST });
-  try {
-    const token = getToken();
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
-    const res = await axios.post(`${baseUrl}/message/send`, messageData, {
-      headers,
-    });
-    dispatch({ type: SEND_MESSAGE_SUCCESS, payload: res.data });
-    message.success("Tin nhắn đã được gửi");
-  } catch (e) {
-    dispatch({ type: SEND_MESSAGE_FAILURE, payload: e.message });
     message.error(e.message);
   }
 };
 
-// Get messages action
-export const getMessages = () => async (dispatch) => {
-  dispatch({ type: GET_MESSAGES_REQUEST });
-  try {
-    const token = getToken();
-    const headers = {
-      Authorization: `Bearer ${token}`,
-      "Content-Type": "application/json",
-    };
-    const res = await axios.get(`${baseUrl}/message`, { headers });
-    dispatch({ type: GET_MESSAGES_SUCCESS, payload: res.data });
-  } catch (e) {
-    dispatch({ type: GET_MESSAGES_FAILURE, payload: e.message });
-  }
-};
+export const sendMessage =
+  (friendID, content, fileList) => async (dispatch) => {
+    dispatch({ type: SEND_MESSAGE_REQUEST });
+    try {
+      const token = getToken();
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      };
+      const formData = new FormData();
+      formData.append("FriendID", friendID);
+      formData.append("Content", content);
+      if (fileList && fileList.length > 0) {
+        fileList.forEach((file) => {
+          formData.append("files", file.originFileObj);
+        });
+      }
+      const res = await axios.post(
+        `${baseUrl}/message/send-message`,
+        formData,
+        {
+          headers,
+        }
+      );
+      dispatch({ type: SEND_MESSAGE_SUCCESS, payload: res.data.data });
+      message.success("Tin nhắn đã được gửi");
+    } catch (e) {
+      dispatch({ type: SEND_MESSAGE_FAILURE, payload: e.message });
+      message.error(e.message);
+    }
+  };
+
+export const getMessages =
+  (friendID, lastTime = null) =>
+  async (dispatch) => {
+    dispatch({ type: GET_MESSAGES_REQUEST });
+    try {
+      const token = getToken();
+      const headers = {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      };
+      const url = lastTime
+        ? `${baseUrl}/message/get-message?FriendID=${friendID}&LastTime=${lastTime}`
+        : `${baseUrl}/message/get-message?FriendID=${friendID}`;
+      const res = await axios.get(url, { headers });
+      dispatch({ type: GET_MESSAGES_SUCCESS, payload: res.data.data });
+    } catch (e) {
+      dispatch({ type: GET_MESSAGES_FAILURE, payload: e.message });
+      message.error(e.message);
+    }
+  };

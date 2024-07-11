@@ -5,7 +5,7 @@ import {
   GET_MESSAGES_REQUEST,
   GET_MESSAGES_SUCCESS,
   GET_MESSAGES_FAILURE,
-} from "../actions/actionTypes";
+} from "../actions/types";
 
 const initialState = {
   loading: false,

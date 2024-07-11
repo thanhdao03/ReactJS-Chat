@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import { getInfo, updateUser } from "../../redux/actions/actions";
+import { getInfo, updateUser } from "../../redux/actions/userActions";
 import { Button, Form, Input, Upload, Modal, message, Image } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import iconUser from "../../assets/Images/user_face.png";
-import { baseUrl } from "../../Services/api";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { getAvatarUrl } from "../../Services/api";
 function InfoUser() {
   const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);
@@ -55,11 +55,6 @@ function InfoUser() {
   const handleImageChange = ({ file, fileList }) => {
     setFileList(fileList);
     setImageFile(file.originFileObj);
-  };
-
-  const getAvatarUrl = (avatar) => {
-    const url = avatar ? `${baseUrl}/images/${avatar}` : iconUser;
-    return url;
   };
   return (
     <>

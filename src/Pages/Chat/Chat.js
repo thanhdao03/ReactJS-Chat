@@ -2,7 +2,6 @@ import { useEffect, useState, useRef } from "react";
 import NoMessage from "../../Components/NoMessage/NoMessage";
 import ListFriends from "../../Components/listFriends/ListFriends";
 import { Form, Image, Input, Upload } from "antd";
-import { apiGetMessages, apiSendMessage } from "../../Services/api";
 import iconUser from "../../assets/Images/user_face.png";
 import imgSend from "../../assets/Images/sendMSG.png";
 import imgFile from "../../assets/Images/file.png";
@@ -14,50 +13,47 @@ import fileDowload from "../../assets/Images/file-dl.png";
 import EmojiPicker from "emoji-picker-react";
 import { CloseOutlined } from "@ant-design/icons";
 import { baseUrl } from "../../Services/api";
-import { getMessages, sendMessage } from "../../redux/actions/actions";
+import { getAvatarUrl } from "../../Services/api";
+import { getMessages, sendMessage } from "../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);
-  const [messages, setMessages] = useState([]);
-  const [newMessage, setNewMessage] = useState("");
   const [isScrolled, setIsScrolled] = useState(false);
   const [showEmoji, setShowEmoji] = useState(false);
   const [fileList, setFileList] = useState([]);
   const [imageFile, setImageFile] = useState(null);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
+  const [newMessage, setNewMessage] = useState("");
+  const messages = useSelector((state) => state.chat.messages);
+
   const dispatch = useDispatch();
 
-  const handleRemoveImage = (file) => {
-    setFileList(fileList.filter((item) => item.uid !== file.uid));
-  };
-  const handleSelectFriend = async (friend) => {
-    setSelectedFriend(friend);
-    const fetchMessages = await apiGetMessages(friend.FriendID);
-    setMessages(fetchMessages);
-    if (messagesContainerRef.current) {
-      messagesContainerRef.current.scrollTop =
-        messagesContainerRef.current.scrollHeight;
-    }
-  };
-  const handleSendMessage = async () => {
-    if (!newMessage.trim() && fileList.length === 0) return;
-    const sentMessage = await apiSendMessage(
-      selectedFriend.FriendID,
-      newMessage,
-      fileList
-    );
-    if (sentMessage) {
-      setMessages([...messages, sentMessage]);
-      setNewMessage("");
-      setFileList([]);
-    }
-  };
   useEffect(() => {
     if (messagesEndRef.current) {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
+
+  const handleSelectFriend = (friend) => {
+    setSelectedFriend(friend);
+    dispatch(getMessages(friend.FriendID));
+    if (messagesContainerRef.current) {
+      messagesContainerRef.current.scrollTop =
+        messagesContainerRef.current.scrollHeight;
+    }
+  };
+  const handleSendMessage = () => {
+    if (!newMessage.trim() && fileList.length === 0) return;
+    dispatch(sendMessage(selectedFriend.FriendID, newMessage, fileList));
+    setNewMessage("");
+    setFileList([]);
+  };
+
+  const handleRemoveImage = (file) => {
+    setFileList(fileList.filter((item) => item.uid !== file.uid));
+  };
+
   const handleScroll = () => {
     if (
       messagesContainerRef.current.scrollTop <
@@ -70,6 +66,7 @@ function Chat() {
       setIsScrolled(false);
     }
   };
+
   const scrollToBottom = () => {
     if (messagesContainerRef.current) {
       messagesContainerRef.current.scrollTo({
@@ -79,17 +76,17 @@ function Chat() {
     }
     setIsScrolled(false);
   };
-  const getAvatarUrl = (avatar) => {
-    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
-  };
+
   const clickEmoji = (event, emojiObject) => {
     const emoji = emojiObject.emoji;
     setNewMessage((prev) => prev + emoji);
   };
+
   const handleUploadChange = ({ file, fileList }) => {
     setFileList(fileList);
     setImageFile(file.originFileObj);
   };
+
   const handleKeyDown = (e) => {
     if (e.key === "Enter" && !e.shiftKey) {
       e.preventDefault();

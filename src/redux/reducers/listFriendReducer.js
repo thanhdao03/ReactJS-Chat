@@ -2,7 +2,7 @@ import {
   GET_LIST_FRIENDS_REQUEST,
   GET_LIST_FRIENDS_SUCCESS,
   GET_LIST_FRIENDS_FAILURE,
-} from "../actions/actionTypes";
+} from "../actions/types";
 
 const initialState = {
   loading: false,

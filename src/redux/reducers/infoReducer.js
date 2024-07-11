@@ -5,7 +5,7 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILURE,
-} from "../actions/actionTypes";
+} from "../actions/types";
 
 const initialState = {
   loading: false,

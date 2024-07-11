@@ -1,25 +1,23 @@
 import { Image, Input, Menu } from "antd";
 import menu from "../../assets/Images/menu.png";
 import { useEffect, useState } from "react";
-import { getInfo } from "../../redux/actions/actions";
-import { useDispatch, useSelector } from "react-redux";
 import iconUser from "../../assets/Images/user_face.png";
 import icon1 from "../../assets/Images/acong.png";
 import icon3 from "../../assets/Images/group.png";
 import icon4 from "../../assets/Images/night.png";
 import icon5 from "../../assets/Images/profile.png";
 import { useNavigate } from "react-router-dom";
-import { baseUrl } from "../../Services/api";
+import { getInfo } from "../../redux/actions/userActions";
+import { useDispatch, useSelector } from "react-redux";
+import { getAvatarUrl } from "../../Services/api";
+
 function SearchFriend({ listFriend, setFilteredFriends }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
   const info = useSelector((state) => state.user.userInfo);
-  console.log(info);
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const getAvatarUrl = (avatar) => {
-    return avatar ? `${baseUrl}/images/${avatar}` : iconUser;
-  };
+
   const handleSearch = (e) => {
     setSearch(e.target.value);
     const filtered = listFriend.filter((friend) =>

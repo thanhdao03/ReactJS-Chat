@@ -5,7 +5,7 @@ import {
   REGISTER_FAILURE,
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
-} from "../actions/actionTypes";
+} from "../actions/types";
 const initialState = {
   loading: false,
   user: null,
