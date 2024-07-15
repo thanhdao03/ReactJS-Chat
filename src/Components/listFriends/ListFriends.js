@@ -1,11 +1,10 @@
   import { useEffect, useState } from "react";
   import SearchFriend from "../search/searchFriend";
-  import { Image } from "antd";
+  import { Image ,Spin} from "antd";
   import iconUser from "../../assets/Images/user_face.png";
   import { getListFriends } from "../../redux/actions/userActions";
   import { useDispatch, useSelector } from "react-redux";
   import { getAvatarUrl } from "../../Services/api";
-
   function ListFriends({ onSelectFriend }) {
     const { friends, loading, error } = useSelector((state) => state.friends);
     const [filteredFriends, setFilteredFriends] = useState([]);
@@ -13,7 +12,6 @@
     useEffect(() => {
       dispatch(getListFriends());
     }, [dispatch]);
-
     useEffect(() => {
       if (friends.length > 0) {
         const sortedData = friends.sort((a, b) => {
@@ -24,7 +22,6 @@
         setFilteredFriends(sortedData);
       }
     }, [friends]);
-    console.log('re render')
     return (
       <>
         <div style={{ maxHeight: "100vh", overflow: "hidden" }}>
@@ -33,7 +30,7 @@
             setFilteredFriends={setFilteredFriends}
           />
           {loading ? (
-            <p>Loading...</p>
+            <Spin />
           ) : error ? (
             <p>{error}</p>
           ) : filteredFriends.length > 0 ? (
