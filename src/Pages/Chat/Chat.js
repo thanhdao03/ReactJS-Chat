@@ -3,13 +3,12 @@ import NoMessage from "../../Components/NoMessage/NoMessage";
 import ListFriends from "../../Components/listFriends/ListFriends";
 import { Image } from "antd";
 import iconUser from "../../assets/Images/user_face.png";
-import { getAvatarUrl } from "../../Services/api";
-import { getMessages } from "../../redux/actions/userActions";
+import apiRoute from "../../Services/api";
 import { useDispatch, useSelector } from "react-redux";
 import MsgChat from "../../Components/messageChat";
 import MsgSend from "../../Components/sendMessage";
-import { sendMessage } from "../../redux/actions/userActions";
-
+import userAction from "../../redux/actions/userActions";
+const { getMessages, sendMessage } = userAction;
 function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);
   const [newMessage, setNewMessage] = useState("");
@@ -51,7 +50,7 @@ function Chat() {
             <div style={{ maxHeight: "100vh", overflow: "hidden" }}>
               <div style={{ display: "flex", position: "relative" }}>
                 <Image
-                  src={getAvatarUrl(selectedFriend.Avatar)}
+                  src={apiRoute.getAvatarUrl(selectedFriend.Avatar)}
                   style={{
                     width: "40px",
                     height: "40px",

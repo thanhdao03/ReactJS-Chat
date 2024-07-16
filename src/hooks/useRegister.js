@@ -2,12 +2,13 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { validateRegister } from "../utils/Validates";
 import { useDispatch, useSelector } from "react-redux";
-import { register } from "../redux/actions/authAction";
+import authAction from "../redux/actions/authAction";
 const useRegister = () => {
   const [fullname, setFullname] = useState("");
   const [acc, setAcc] = useState("");
   const [pass, setPass] = useState("");
   const [confirmPass, setConfirmPass] = useState("");
+  const { register } = authAction;
   const dispatch = useDispatch();
   const auth = useSelector((state) => state.auth);
   const navigate = useNavigate();

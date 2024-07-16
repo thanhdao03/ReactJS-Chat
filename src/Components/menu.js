@@ -1,4 +1,4 @@
-import { getAvatarUrl } from "../Services/api";
+import apiRoute from "../Services/api";
 import { Image, Menu } from "antd";
 import { useEffect } from "react";
 import iconUser from "../assets/Images/user_face.png";
@@ -7,7 +7,8 @@ import icon3 from "../assets/Images/group.png";
 import icon4 from "../assets/Images/night.png";
 import icon5 from "../assets/Images/profile.png";
 import { useNavigate } from "react-router-dom";
-function IsMenu({info}) {
+
+function IsMenu({ info }) {
   const navigate = useNavigate();
   useEffect(() => {
     if (!localStorage.getItem("token")) {
@@ -61,7 +62,7 @@ function IsMenu({info}) {
               onClick={() => {
                 navigate("/info");
               }}
-              src={getAvatarUrl(info.Avatar)}
+              src={apiRoute.getAvatarUrl(info.Avatar)}
               style={{
                 width: "40px",
                 height: "40px",
