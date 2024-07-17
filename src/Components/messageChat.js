@@ -7,6 +7,7 @@ import imgDropdwn from "../assets/Images/luotxuong.png";
 import fileDowload from "../assets/Images/file-dl.png";
 import { baseUrl } from "../Services/api";
 import { getAvatarUrl } from "../Services/api";
+
 function MsgChat({messages,selectedFriend}) {
   const [isScrolled, setIsScrolled] = useState(false);
   const messagesEndRef = useRef(null);
@@ -39,7 +40,7 @@ function MsgChat({messages,selectedFriend}) {
   };
   return (
     <>
-      {" "}
+      {""}
       <div
         ref={messagesContainerRef}
         onScroll={handleScroll}
@@ -48,7 +49,7 @@ function MsgChat({messages,selectedFriend}) {
         <div>
           {messages.map((msg) => (
             <div
-              key={msg._id}
+              key={msg.id}
               style={{
                 display: "flex",
                 flexDirection: msg.MessageType === 1 ? "row-reverse" : "row",
@@ -86,7 +87,7 @@ function MsgChat({messages,selectedFriend}) {
                     const imgUrl = `${baseUrl}${img.urlImage}`;
                     return (
                       <Image
-                        key={img._id}
+                        key={img.id}
                         src={imgUrl}
                         style={{
                           maxWidth: "200px",

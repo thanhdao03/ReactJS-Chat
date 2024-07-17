@@ -6,36 +6,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAvatarUrl } from "../../Services/api";
 import { ModalInfo } from "../modal";
 function InfoUser() {
-  const [userInfo, setUserInfo] = useState(null);
   const [isModal, setIsModal] = useState(false);
   const dispatch = useDispatch();
-  const { userInfo: user, loading, error } = useSelector((state) => state.user);
+  const { userInfo, loading, error } = useSelector((state) => state.user);
   const [form] = Form.useForm();
   useEffect(() => {
     dispatch(getInfo());
   }, [dispatch]);
 
   useEffect(() => {
-    if (user) {
-      setUserInfo(user);
-      form.setFieldsValue(user);
+    if (userInfo) {
+      form.setFieldsValue(userInfo);
     }
-  }, [user, form]);
+  }, [userInfo, form]);
 
   const showModal = () => {
     setIsModal(true);
     form.setFieldValue(userInfo);
   };
- 
-  return (  
+
+  return (
     <>
-    {isModal?<ModalInfo isModal={isModal} setIsModal={setIsModal}/>:null}
+      {isModal ? <ModalInfo isModal={isModal} setIsModal={setIsModal} /> : null}
       <div
         style={{
           textAlign: "center",
         }}
       >
-        {loading ? (  
+        {loading ? (
           <Spin />
         ) : error ? (
           <p>Error{error}</p>
@@ -64,7 +62,6 @@ function InfoUser() {
         <Button type="primary" onClick={showModal}>
           Update User
         </Button>
-        
       </div>
     </>
   );
