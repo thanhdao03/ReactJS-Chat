@@ -2,9 +2,10 @@ import { Image, Input, Spin } from "antd";
 import menu from "../../assets/Images/menu.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { getInfo } from "../../redux/actions/userActions";
+import userAction from "../../redux/actions/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import IsMenu from "../menu";
+const { getInfo } = userAction;
 function SearchFriend({ listFriend, setFilteredFriends }) {
   const [search, setSearch] = useState("");
   const [show, setShow] = useState(false);
@@ -28,7 +29,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
       navigate("/");
     }
   }, [navigate]);
-  
+
   return (
     <>
       <div
@@ -56,7 +57,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
           ) : error ? (
             <p>Error{error}</p>
           ) : (
-            show && <IsMenu info={info}/>
+            show && <IsMenu info={info} />
           )}
         </div>
         <Input

@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
-import { getInfo } from "../../redux/actions/userActions";
+import userAction from "../../redux/actions/userActions";
 import { Button, Form, Image, Spin } from "antd";
 import iconUser from "../../assets/Images/user_face.png";
 import { useDispatch, useSelector } from "react-redux";
-import { getAvatarUrl } from "../../Services/api";
+import apiRoute from "../../Services/api";
 import { ModalInfo } from "../modal";
+const { getInfo } = userAction;
 function InfoUser() {
   const [isModal, setIsModal] = useState(false);
   const dispatch = useDispatch();
@@ -44,7 +45,7 @@ function InfoUser() {
             <h2>Username: {userInfo.Username}</h2>
             <h2>Image:</h2>
             <Image
-              src={getAvatarUrl(userInfo.Avatar)}
+              src={apiRoute.getAvatarUrl(userInfo.Avatar)}
               style={{
                 width: "300px",
                 height: "auto",

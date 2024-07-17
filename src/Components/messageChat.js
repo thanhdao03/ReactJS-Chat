@@ -6,9 +6,8 @@ import imgSentt from "../assets/Images/sentttttttttt.png";
 import imgDropdwn from "../assets/Images/luotxuong.png";
 import fileDowload from "../assets/Images/file-dl.png";
 import { baseUrl } from "../Services/api";
-import { getAvatarUrl } from "../Services/api";
-
-function MsgChat({messages,selectedFriend}) {
+import apiRoute from "../Services/api";
+function MsgChat({ messages, selectedFriend }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const messagesEndRef = useRef(null);
   const messagesContainerRef = useRef(null);
@@ -59,7 +58,7 @@ function MsgChat({messages,selectedFriend}) {
             >
               {msg.MessageType !== 1 && (
                 <Image
-                  src={getAvatarUrl(selectedFriend.Avatar)}
+                  src={apiRoute.getAvatarUrl(selectedFriend.Avatar)}
                   style={{
                     width: "35px",
                     height: "35px",

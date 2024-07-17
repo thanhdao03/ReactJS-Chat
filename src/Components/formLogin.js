@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import "../assets/styles/Login.scss";
 import useLogin from "../hooks/useLogin";
 function FormLogin() {
-    const { acc, pass, setAcc, setPass, handleSubmit } = useLogin();
+  const { acc, pass, setAcc, setPass, handleSubmit } = useLogin();
   return (
     <>
       {" "}
