@@ -1,2 +1,2 @@
-Redux-Chat
+Chat
 
