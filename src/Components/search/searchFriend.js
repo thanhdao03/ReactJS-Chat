@@ -55,7 +55,7 @@ function SearchFriend({ listFriend, setFilteredFriends }) {
           {loading ? (
             <Spin />
           ) : error ? (
-            <p>Error{error}</p>
+            <p>{error}</p>
           ) : (
             show && <IsMenu info={info} />
           )}

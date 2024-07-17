@@ -105,8 +105,8 @@ function ListFriends({ onSelectFriend }) {
             ))}
           </div>
         ) : (
-          // <p>No user</p>
-          <Spin />
+          <p>No user</p>
+          // <Spin />
         )}
       </div>
     </>

@@ -1,35 +1,39 @@
-import { message } from "antd";
 export const validateLogin = (acc, pass) => {
   if (!acc) {
-    message.error("Tài khoản không được để trống");
-    return false;
+    return "Tài khoản không được để trống";
   }
   if (!pass) {
-    message.error("Mật khẩu không để trống");
-    return false;
+    return "Mật khẩu không để trống";
   }
-  return true;
+  return null;
+};
+export const handleError = (error) => {
+  if (error) {
+    if (error.status === 400) {
+      return "Mời nhập lại tài khoản";
+    } else if (error.status === 401) {
+      return "Mời nhập lại mật khẩu";
+    } else {
+      return null;
+    }
+  }
+  return null;
 };
 export const validateRegister = (fullname, acc, pass, confirmPass) => {
   if (!fullname) {
-    message.error("FullName không được để trống");
-    return false;
+    return "FullName không được để trống";
   }
   if (!acc) {
-    message.error("Tài khoản không được để trống");
-    return false;
+    return "Tài khoản không được để trống";
   }
   if (!pass) {
-    message.error("Mật khẩu không để trống");
-    return false;
+    return "Mật khẩu không để trống";
   }
   if (!confirmPass) {
-    message.error("Vui lòng nhập lại mật khẩu");
-    return false;
+    return "Vui lòng nhập lại mật khẩu";
   }
   if (confirmPass !== pass) {
-    message.error("Mật khẩu không không trùng");
-    return false;
+    return "Mật khẩu không không trùng";
   }
-  return true;
+  return null;
 };

@@ -37,7 +37,7 @@ function InfoUser() {
         {loading ? (
           <Spin />
         ) : error ? (
-          <p>Error{error}</p>
+          <p>{error}</p>
         ) : userInfo ? (
           <div>
             <h1>User Information</h1>
