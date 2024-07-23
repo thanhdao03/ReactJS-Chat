@@ -1,7 +1,6 @@
 import axios from "axios";
 import iconUser from "../assets/Images/user_face.png";
-// export const baseUrl = "http://10.2.44.52:8888/api";
-export const baseUrl = "http://localhost:8888/api";
+export const baseUrl = process.env.URL_API;
 const api = axios.create({ baseURL: baseUrl });
 
 api.interceptors.request.use((config) => {
