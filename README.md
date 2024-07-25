@@ -1,2 +1,2 @@
-Chat
+React-Redux-Client
 
