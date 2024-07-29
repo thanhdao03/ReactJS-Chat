@@ -1,23 +1,20 @@
-import "../../assets/styles/Register.scss";
+import "../assets/styles/Register.scss";
 import { Link } from "react-router-dom";
-import {  Image,  } from "antd";
-import FormRegister from "../../Components/formRegister";
+import { Image } from "antd";
+import FormRegister from "../components/formRegister";
 function Register() {
   return (
     <>
       <div className="body">
         <header className="logo">
-          <Image
-            src={require("../../assets/Images/logo.png")}
-            preview={false}
-          />
+          <Image src={require("../assets/images/logo.png")} preview={false} />
         </header>
         <div className="content-register">
           <div className="image-register">
             <Image
               preview={false}
               className="image2"
-              src={require("../../assets/Images/image2.png")}
+              src={require("../assets/images/image2.png")}
             />
           </div>
           <div className="form-register">

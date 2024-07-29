@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 import SearchFriend from "../search/searchFriend";
 import { Image, Spin } from "antd";
-import iconUser from "../../assets/Images/user_face.png";
+import iconUser from "../../assets/images/user_face.png";
 import { useDispatch, useSelector } from "react-redux";
-import userAction from "../../redux/actions/userActions";
-import apiRoute from "../../Services/api";
+import userAction from "../../redux/actions/user/userActions";
+import apiRoute from "../../service/api";
 const { getListFriends } = userAction;
 function ListFriends({ onSelectFriend }) {
   const { friends, loading, error } = useSelector((state) => state.friends);

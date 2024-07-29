@@ -3,7 +3,7 @@ import { Form, Input, Upload, Modal, message } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import userAction from "../redux/actions/userActions";
+import userAction from "../redux/actions/user/userActions";
 const { updateUser } = userAction;
 export const ModalInfo = ({ isModal, setIsModal }) => {
   const dispatch = useDispatch();

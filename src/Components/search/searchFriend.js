@@ -1,8 +1,8 @@
 import { Image, Input, Spin } from "antd";
-import menu from "../../assets/Images/menu.png";
+import menu from "../../assets/images/menu.png";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import userAction from "../../redux/actions/userActions";
+import userAction from "../../redux/actions/user/userActions";
 import { useDispatch, useSelector } from "react-redux";
 import IsMenu from "../menu";
 const { getInfo } = userAction;

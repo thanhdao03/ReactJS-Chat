@@ -1,11 +1,11 @@
-import apiRoute from "../Services/api";
+import apiRoute from "../service/api";
 import { Image, Menu } from "antd";
 import { useEffect } from "react";
-import iconUser from "../assets/Images/user_face.png";
-import icon1 from "../assets/Images/acong.png";
-import icon3 from "../assets/Images/group.png";
-import icon4 from "../assets/Images/night.png";
-import icon5 from "../assets/Images/profile.png";
+import iconUser from "../assets/images/user_face.png";
+import icon1 from "../assets/images/acong.png";
+import icon3 from "../assets/images/group.png";
+import icon4 from "../assets/images/night.png";
+import icon5 from "../assets/images/profile.png";
 import { useNavigate } from "react-router-dom";
 
 function IsMenu({ info }) {

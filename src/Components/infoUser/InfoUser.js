@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react";
-import userAction from "../../redux/actions/userActions";
+import userAction from "../../redux/actions/user/userActions";
 import { Button, Form, Image, Spin } from "antd";
-import iconUser from "../../assets/Images/user_face.png";
+import iconUser from "../../assets/images/user_face.png";
 import { useDispatch, useSelector } from "react-redux";
-import apiRoute from "../../Services/api";
+import apiRoute from "../../service/api";
 import { ModalInfo } from "../modal";
 const { getInfo } = userAction;
 function InfoUser() {

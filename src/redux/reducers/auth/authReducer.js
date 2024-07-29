@@ -1,11 +1,4 @@
-import {
-  LOGIN_FAILURE,
-  LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  REGISTER_FAILURE,
-  REGISTER_REQUEST,
-  REGISTER_SUCCESS,
-} from "../actions/types";
+import * as types from "../../actions/auth/constantsAuth.js";
 const initialState = {
   loading: false,
   user: null,
@@ -14,23 +7,22 @@ const initialState = {
 
 const authReducer = (state = initialState, action) => {
   switch (action.type) {
-    
-    case LOGIN_REQUEST:
-    case REGISTER_REQUEST:
+    case types.LOGIN_REQUEST:
+    case types.REGISTER_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case LOGIN_SUCCESS:
-    case REGISTER_SUCCESS:
+    case types.LOGIN_SUCCESS:
+    case types.REGISTER_SUCCESS:
       return {
         ...state,
         loading: false,
         user: action.payload,
       };
-    case LOGIN_FAILURE:
-    case REGISTER_FAILURE:
+    case types.LOGIN_FAILURE:
+    case types.REGISTER_FAILURE:
       return {
         ...state,
         loading: false,

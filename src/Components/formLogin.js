@@ -1,10 +1,10 @@
 import { Button, Image, Input, Form, Spin } from "antd";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import authAction from "../redux/actions/authAction";
+import authAction from "../redux/actions/auth/authAction";
 import "../assets/styles/Login.scss";
 import { useEffect, useState } from "react";
-import { validateLogin, handleError } from "../utils/Validates";
+import { validateLogin, handleError } from "../utils/validates";
 
 function FormLogin() {
   const [acc, setAcc] = useState("daoptc");
@@ -127,9 +127,9 @@ function FormLogin() {
         </Button>
         <p className="text-lass">Hoặc tiếp tục với</p>
         <div className="logo-login">
-          <Image src={require("../assets/Images/gg.png")} preview={false} />
-          <Image src={require("../assets/Images/fb.png")} preview={false} />
-          <Image src={require("../assets/Images/gg.png")} preview={false} />
+          <Image src={require("../assets/images/gg.png")} preview={false} />
+          <Image src={require("../assets/images/fb.png")} preview={false} />
+          <Image src={require("../assets/images/gg.png")} preview={false} />
         </div>
       </Form>
     </>

@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import NoMessage from "../../Components/NoMessage/NoMessage";
-import ListFriends from "../../Components/listFriends/ListFriends";
+import NoMessage from "../components/noMessage/noMessage";
+import ListFriends from "../components/listFriends/ListFriends";
 import { Image } from "antd";
-import iconUser from "../../assets/Images/user_face.png";
-import apiRoute from "../../Services/api";
+import iconUser from "../assets/images/user_face.png";
+import apiRoute from "../service/api";
 import { useDispatch, useSelector } from "react-redux";
-import MsgChat from "../../Components/messageChat";
-import MsgSend from "../../Components/sendMessage";
-import userAction from "../../redux/actions/userActions";
+import MsgChat from "../components/messageChat";
+import MsgSend from "../components/sendMessage";
+import userAction from "../redux/actions/user/userActions";
 const { getMessages, sendMessage } = userAction;
 function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);

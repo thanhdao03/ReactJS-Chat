@@ -1,16 +1,13 @@
-import {  Image, } from "antd";
+import { Image } from "antd";
 import { Link } from "react-router-dom";
-import "../../assets/styles/Login.scss";
-import FormLogin from "../../Components/formLogin";
+import "../assets/styles/Login.scss";
+import FormLogin from "../components/formLogin";
 function Login() {
   return (
     <>
       <div className="body">
         <header className="logo">
-          <Image
-            src={require("../../assets/Images/logo.png")}
-            preview={false}
-          />
+          <Image src={require("../assets/images/logo.png")} preview={false} />
         </header>
         <div className="content-body">
           <div className="text-all">
@@ -27,7 +24,7 @@ function Login() {
             <Image
               className="image1"
               preview={false}
-              src={require("../../assets/Images/image1.png")}
+              src={require("../assets/images/image1.png")}
             ></Image>
           </div>
           <div className="form-login">

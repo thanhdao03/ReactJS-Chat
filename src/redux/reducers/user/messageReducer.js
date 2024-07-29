@@ -1,11 +1,4 @@
-import {
-  SEND_MESSAGE_REQUEST,
-  SEND_MESSAGE_SUCCESS,
-  SEND_MESSAGE_FAILURE,
-  GET_MESSAGES_REQUEST,
-  GET_MESSAGES_SUCCESS,
-  GET_MESSAGES_FAILURE,
-} from "../actions/types";
+import * as types from "../../actions/user/constantsUser";
 
 const initialState = {
   loading: false,
@@ -15,27 +8,27 @@ const initialState = {
 
 const messagesReducer = (state = initialState, action) => {
   switch (action.type) {
-    case SEND_MESSAGE_REQUEST:
-    case GET_MESSAGES_REQUEST:
+    case types.SEND_MESSAGE_REQUEST:
+    case types.GET_MESSAGES_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case SEND_MESSAGE_SUCCESS:
+    case types.SEND_MESSAGE_SUCCESS:
       return {
         ...state,
         loading: false,
         messages: [...state.messages, action.payload],
       };
-    case GET_MESSAGES_SUCCESS:
+    case types.GET_MESSAGES_SUCCESS:
       return {
         ...state,
         loading: false,
         messages: action.payload,
       };
-    case SEND_MESSAGE_FAILURE:
-    case GET_MESSAGES_FAILURE:
+    case types.SEND_MESSAGE_FAILURE:
+    case types.GET_MESSAGES_FAILURE:
       return {
         ...state,
         loading: false,

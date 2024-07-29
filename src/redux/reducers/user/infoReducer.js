@@ -1,11 +1,4 @@
-import {
-  GET_INFO_REQUEST,
-  GET_INFO_SUCCESS,
-  GET_INFO_FAILURE,
-  UPDATE_USER_REQUEST,
-  UPDATE_USER_SUCCESS,
-  UPDATE_USER_FAILURE,
-} from "../actions/types";
+import * as types from "../../actions/user/constantsUser";
 
 const initialState = {
   loading: false,
@@ -15,27 +8,27 @@ const initialState = {
 
 const userReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_INFO_REQUEST:
-    case UPDATE_USER_REQUEST:
+    case types.GET_INFO_REQUEST:
+    case types.UPDATE_USER_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case GET_INFO_SUCCESS:
+    case types.GET_INFO_SUCCESS:
       return {
         ...state,
         loading: false,
         userInfo: action.payload,
       };
-    case UPDATE_USER_SUCCESS:
+    case types.UPDATE_USER_SUCCESS:
       return {
         ...state,
         loading: false,
         userInfo: action.payload.data,
       };
-    case GET_INFO_FAILURE:
-    case UPDATE_USER_FAILURE:
+    case types.GET_INFO_FAILURE:
+    case types.UPDATE_USER_FAILURE:
       return {
         ...state,
         loading: false,

@@ -1,6 +1,6 @@
 import { message } from "antd";
-import * as types from "./types";
-import apiRoute from "../../Services/api";
+import * as types from "./constantsAuth";
+import apiRoute from "../../../service/api";
 const errorLog = "Mất kết nối server";
 
 const authAction = {
@@ -12,7 +12,8 @@ const authAction = {
       localStorage.setItem("token", res.data.data.token);
       message.success("Đăng nhập thành công");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Mất kết nối server";
+      const errorMessage =
+        error.response?.data?.message || "Mất kết nối server";
       const errorCode = error.response?.status || 500;
       const messageE = errorLog;
       dispatch({
@@ -29,7 +30,8 @@ const authAction = {
       localStorage.setItem("token", res.data.data.token);
       message.success("Đăng ký thành công");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || "Mất kết nối server";
+      const errorMessage =
+        error.response?.data?.message || "Mất kết nối server";
       const errorCode = error.response?.status || 500;
       const messageB = errorLog;
       dispatch({

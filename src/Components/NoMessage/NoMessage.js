@@ -1,5 +1,5 @@
 import { Image } from "antd";
-import noMsg from "../../assets/Images/no-msh.png";
+import noMsg from "../../assets/images/no-msh.png";
 
 function NoMessage() {
   return (

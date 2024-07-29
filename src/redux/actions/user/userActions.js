@@ -1,6 +1,6 @@
 import { message } from "antd";
-import * as types from "./types";
-import apiRoute from "../../Services/api";
+import * as types from "./constantsUser";
+import apiRoute from "../../../service/api";
 const userAction = {
   getInfo: () => async (dispatch) => {
     dispatch({ type: types.GET_INFO_FAILURE });

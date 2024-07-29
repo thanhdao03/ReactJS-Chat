@@ -3,8 +3,8 @@ import { Link, useNavigate } from "react-router-dom";
 import { Button, Input, Form, Spin } from "antd";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { validateRegister, handleError } from "../utils/Validates";
-import authAction from "../redux/actions/authAction";
+import { validateRegister, handleError } from "../utils/validates";
+import authAction from "../redux/actions/auth/authAction";
 
 function FormRegister() {
   const [fullname, setFullname] = useState("");

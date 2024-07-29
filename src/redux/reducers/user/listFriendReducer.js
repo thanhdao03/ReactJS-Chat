@@ -1,9 +1,4 @@
-import {
-  GET_LIST_FRIENDS_REQUEST,
-  GET_LIST_FRIENDS_SUCCESS,
-  GET_LIST_FRIENDS_FAILURE,
-} from "../actions/types";
-
+import * as types from "../../actions/user/constantsUser";
 const initialState = {
   loading: false,
   friends: [],
@@ -12,19 +7,19 @@ const initialState = {
 
 const friendsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_LIST_FRIENDS_REQUEST:
+    case types.GET_LIST_FRIENDS_REQUEST:
       return {
         ...state,
         loading: true,
         error: null,
       };
-    case GET_LIST_FRIENDS_SUCCESS:
+    case types.GET_LIST_FRIENDS_SUCCESS:
       return {
         ...state,
         loading: false,
         friends: action.payload,
       };
-    case GET_LIST_FRIENDS_FAILURE:
+    case types.GET_LIST_FRIENDS_FAILURE:
       return {
         ...state,
         loading: false,
