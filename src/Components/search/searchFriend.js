@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import userAction from "../../redux/actions/user/userActions";
 import { useDispatch, useSelector } from "react-redux";
-import IsMenu from "../menu";
+import IsMenu from "../menu/menu";
 const { getInfo } = userAction;
 function SearchFriend({ listFriend, setFilteredFriends }) {
   const [search, setSearch] = useState("");

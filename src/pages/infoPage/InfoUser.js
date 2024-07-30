@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import userAction from "../../redux/actions/user/userActions";
-import { Button, Form, Image, Spin } from "antd";
+import { Form, Image, Spin } from "antd";
 import iconUser from "../../assets/images/user_face.png";
 import { useDispatch, useSelector } from "react-redux";
 import apiRoute from "../../service/api";
-import { ModalInfo } from "../modal";
+import { ModalInfo } from "../../components/modal/updateInfo";
+import { ButtonShowModal } from "../../common/components/button/buttonShowModal";
 const { getInfo } = userAction;
 function InfoUser() {
   const [isModal, setIsModal] = useState(false);
@@ -60,9 +61,7 @@ function InfoUser() {
         ) : (
           <p>Loading user info...</p>
         )}
-        <Button type="primary" onClick={showModal}>
-          Update User
-        </Button>
+        <ButtonShowModal showModal={showModal} />
       </div>
     </>
   );

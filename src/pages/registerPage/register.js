@@ -1,33 +1,25 @@
-import { Image } from "antd";
+import "./Register.scss";
 import { Link } from "react-router-dom";
-import "../assets/styles/Login.scss";
-import FormLogin from "../components/formLogin";
-function Login() {
+import { Image } from "antd";
+import { ImageLogo } from "../../common/components/image/imageLogo";
+import FormRegister from "../../components/form/formRegister/registerForm";
+
+function Register() {
   return (
     <>
       <div className="body">
         <header className="logo">
-          <Image src={require("../assets/images/logo.png")} preview={false} />
+          <ImageLogo />
         </header>
-        <div className="content-body">
-          <div className="text-all">
-            <p className="text-first">
-              Đăng nhập để <br />
-              kết nối
-            </p>
-            <p className="text-second">
-              Nếu chưa có tài khoản Đăng <br />
-              Đăng ký tại <Link to="/signup">đây</Link>
-            </p>
-          </div>
-          <div className="image-layout">
+        <div className="content-register">
+          <div className="image-register">
             <Image
-              className="image1"
               preview={false}
-              src={require("../assets/images/image1.png")}
-            ></Image>
+              className="image2"
+              src={require("../../assets/images/image2.png")}
+            />
           </div>
-          <div className="form-login">
+          <div className="form-register">
             <div className="form-login-header">
               <select
                 style={{
@@ -50,11 +42,15 @@ function Login() {
                 </Link>
               </p>
             </div>
-            <FormLogin />
+            <p className="text-register">Đăng ký</p>
+            <FormRegister />
+            <p className="text-lass-register">
+              Đã có tài khoản, đăng nhập tại <Link to="/">đây!</Link>
+            </p>
           </div>
         </div>
       </div>
     </>
   );
 }
-export default Login;
+export default Register;

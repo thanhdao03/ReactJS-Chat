@@ -1,10 +1,10 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Login from "../pages/login";
-import Register from "../pages/register";
-import Chat from "../pages/chat";
-import InfoUser from "../components/infoUser/InfoUser";
-import PrivateRoute from "../components/privateRoute.js/privateRoute";
+import Login from "../pages/loginPage/login";
+import Register from "../pages/registerPage/register";
+import Chat from "../pages/chatPage/chat";
+import InfoUser from "../pages/infoPage/InfoUser";
+import PrivateRoute from "./privateRoute";
 
 const ChatRoutes = () => {
   return (

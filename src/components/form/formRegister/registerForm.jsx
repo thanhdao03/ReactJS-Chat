@@ -1,10 +1,17 @@
-import "../assets/styles/Register.scss";
-import { Link, useNavigate } from "react-router-dom";
-import { Button, Input, Form, Spin } from "antd";
 import { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { Form } from "antd";
 import { useDispatch, useSelector } from "react-redux";
-import { validateRegister, handleError } from "../utils/validates";
-import authAction from "../redux/actions/auth/authAction";
+import {
+  validateRegister,
+  handleError,
+} from "../../../common/untils/validates";
+import authAction from "../../../redux/actions/auth/authAction";
+import "../../../pages/registerPage/Register.scss";
+import { ButtonRegister } from "../../../common/components/button/buttonRegister";
+import InputField from "../../../common/components/input/registerInputField";
+import LoadingError from "./registerError";
+import "./registerForm.scss";
 
 function FormRegister() {
   const [fullname, setFullname] = useState("");
@@ -22,6 +29,7 @@ function FormRegister() {
   const dispatch = useDispatch();
   const { user, loading, error } = useSelector((state) => state.auth);
   const navigate = useNavigate();
+
   const checkRegister = () => {
     const validationError = validateRegister(fullname, acc, pass, confirmPass);
     if (validationError) {
@@ -41,6 +49,7 @@ function FormRegister() {
     }
     return true;
   };
+
   const handleRegister = async (e) => {
     e.preventDefault();
     if (!checkRegister()) {
@@ -62,6 +71,7 @@ function FormRegister() {
       console.log(e);
     }
   };
+
   const handleFocus = (field) => {
     if (field === "fullname") {
       setFullnameError(null);
@@ -73,6 +83,7 @@ function FormRegister() {
       setConfirmPassError(null);
     }
   };
+
   useEffect(() => {
     if (error) {
       if (error.status === 400) {
@@ -83,98 +94,62 @@ function FormRegister() {
       }
     }
   }, [error]);
+
   useEffect(() => {
     if (user && !error) {
       navigate("/chat");
     }
   }, [user, error, navigate]);
+
   return (
     <>
       <Form className="form-register-post" method="POST">
-        <Form.Item
+        <InputField
+          name="fullname"
+          value={fullname}
+          onChange={(e) => setFullname(e.target.value)}
+          placeholder="Nhập họ tên"
+          type="text"
+          autoComplete="FullName"
           validateStatus={fullnameError ? "error" : ""}
           help={fullnameError}
-        >
-          <Input
-            className="form-input-register"
-            placeholder="Nhập họ tên"
-            type="text"
-            name="fullname"
-            onChange={(e) => {
-              setFullname(e.target.value);
-            }}
-            value={fullname}
-            autoComplete="FullName"
-            onFocus={() => handleFocus("fullname")}
-          />
-        </Form.Item>
-        <Form.Item validateStatus={accError ? "error" : ""} help={accError}>
-          <Input
-            className="form-input-register"
-            onChange={(e) => {
-              setAcc(e.target.value);
-            }}
-            value={acc}
-            placeholder="Nhập tài khoản"
-            type="text"
-            name="acc"
-            autoComplete="Username"
-            onFocus={() => handleFocus("acc")}
-          />
-        </Form.Item>
-        <Form.Item validateStatus={passError ? "error" : ""} help={passError}>
-          <Input
-            className="form-input-register"
-            onChange={(e) => {
-              setPass(e.target.value);
-            }}
-            value={pass}
-            placeholder="Nhập mật khẩu"
-            type="password"
-            name="pass"
-            autoComplete="Password"
-            onFocus={() => handleFocus("pass")}
-          />
-        </Form.Item>
-        <Form.Item
+          onFocus={() => handleFocus("fullname")}
+        />
+        <InputField
+          name="acc"
+          value={acc}
+          onChange={(e) => setAcc(e.target.value)}
+          placeholder="Nhập tài khoản"
+          type="text"
+          autoComplete="Username"
+          validateStatus={accError ? "error" : ""}
+          help={accError}
+          onFocus={() => handleFocus("acc")}
+        />
+        <InputField
+          name="pass"
+          value={pass}
+          onChange={(e) => setPass(e.target.value)}
+          placeholder="Nhập mật khẩu"
+          type="password"
+          autoComplete="Password"
+          validateStatus={passError ? "error" : ""}
+          help={passError}
+          onFocus={() => handleFocus("pass")}
+        />
+        <InputField
+          name="confirmPass"
+          value={confirmPass}
+          onChange={(e) => setConfirmPass(e.target.value)}
+          placeholder="Nhập lại mật khẩu"
+          type="password"
+          autoComplete="confirmPassword"
           validateStatus={confirmPassError ? "error" : ""}
           help={confirmPassError}
-        >
-          <Input
-            className="form-input-register"
-            value={confirmPass}
-            onChange={(e) => {
-              setConfirmPass(e.target.value);
-            }}
-            placeholder="Nhập lại mật khẩu"
-            type="password"
-            name="pass"
-            autoComplete="confirmPassword"
-            onFocus={() => handleFocus("confirmPass")}
-          />
-        </Form.Item>
-        <p
-          className="a"
-          style={{
-            position: "relative",
-            display: "flex",
-            justifyContent: "center",
-            color: "red",
-          }}
-        >
-          {" "}
-          {loading ? <Spin /> : error ? <>{error.errorB}</> : null}
-        </p>
-        <Button
-          className="form-btn-login-register"
-          type="primary"
-          onClick={handleRegister}
-        >
-          Đăng ký
-        </Button>
-        <p className="text-lass-register">
-          Đã có tài khoản, đăng nhập tại <Link to="/">đây!</Link>
-        </p>
+          onFocus={() => handleFocus("confirmPass")}
+        />
+        <LoadingError loading={loading} error={error} />
+        <ButtonRegister handleRegister={handleRegister} />
       </Form>
     </>
   );

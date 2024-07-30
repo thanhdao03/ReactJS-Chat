@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
 import { Image } from "antd";
-import iconUser from "../assets/images/user_face.png";
-import imgSent from "../assets/images/sent.png";
-import imgSentt from "../assets/images/sentttttttttt.png";
-import imgDropdwn from "../assets/images/luotxuong.png";
-import fileDowload from "../assets/images/file-dl.png";
-import { baseUrl } from "../service/api";
-import apiRoute from "../service/api";
+import iconUser from "../../assets/images/user_face.png";
+import imgSent from "../../assets/images/sent.png";
+import imgSentt from "../../assets/images/sentttttttttt.png";
+import imgDropdwn from "../../assets/images/luotxuong.png";
+import fileDowload from "../../assets/images/file-dl.png";
+import { baseUrl } from "../../service/api";
+import apiRoute from "../../service/api";
+
 function MsgChat({ messages, selectedFriend }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const messagesEndRef = useRef(null);

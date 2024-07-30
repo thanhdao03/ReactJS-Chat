@@ -1,13 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import NoMessage from "../components/noMessage/noMessage";
-import ListFriends from "../components/listFriends/ListFriends";
+import NoMessage from "../../components/noMessage/noMessage";
+import FriendListContainer from "../../components/listFriends/friendListContainer";
 import { Image } from "antd";
-import iconUser from "../assets/images/user_face.png";
-import apiRoute from "../service/api";
+import iconUser from "../../assets/images/user_face.png";
+import apiRoute from "../../service/api";
 import { useDispatch, useSelector } from "react-redux";
-import MsgChat from "../components/messageChat";
-import MsgSend from "../components/sendMessage";
-import userAction from "../redux/actions/user/userActions";
+import MsgSend from "../../components/message/textarea";
+import MsgChat from "../../components/message/content";
+import userAction from "../../redux/actions/user/userActions";
 const { getMessages, sendMessage } = userAction;
 function Chat() {
   const [selectedFriend, setSelectedFriend] = useState(null);
@@ -26,6 +26,7 @@ function Chat() {
   useEffect(() => {
     setHasMsg(messages.length > 0);
   }, [messages]);
+
   const handleSendMessage = () => {
     if (!newMessage.trim() && fileList.length === 0) return;
     dispatch(sendMessage(selectedFriend.FriendID, newMessage, fileList));
@@ -44,7 +45,7 @@ function Chat() {
   return (
     <>
       <div style={{ display: "flex" }}>
-        <ListFriends onSelectFriend={handleSelectFriend} />
+        <FriendListContainer onSelectFriend={handleSelectFriend} />
         <div style={{ flex: 1 }}>
           {selectedFriend ? (
             <div style={{ maxHeight: "100vh", overflow: "hidden" }}>

@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { Form, Image, Input, Upload } from "antd";
-import imgSend from "../assets/images/sendMSG.png";
-import imgFile from "../assets/images/file.png";
-import imgIcon from "../assets/images/icon.png";
 import EmojiPicker from "emoji-picker-react";
 import { CloseOutlined } from "@ant-design/icons";
+import imgSend from "../../assets/images/sendMSG.png";
+import imgFile from "../../assets/images/file.png";
+import imgIcon from "../../assets/images/icon.png";
+
 function MsgSend({
   sendMsg,
   newMessage,

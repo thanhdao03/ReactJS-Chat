@@ -1,8 +1,11 @@
 import axios from "axios";
 import iconUser from "../assets/images/user_face.png";
-export const baseUrl = process.env.REACT_APP_URL_API;
-const api = axios.create({ baseURL: baseUrl });
+import config1 from "../../src/config/config.json";
 
+export const baseUrl = config1.REACT_APP_URL_API;
+// export const baseUrl = process.env.REACT_APP_URL_API;
+
+const api = axios.create({ baseURL: baseUrl });
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem("token");
   if (token) {

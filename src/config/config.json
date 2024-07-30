@@ -1,0 +1,4 @@
+{
+    "REACT_APP_URL_API": "http://localhost:8888/api",
+    "REACT_APP_URL_API_BKAV" :"http://10.2.44.52:8888/api"
+}
