@@ -1,6 +1,7 @@
 import axios from "axios";
 import iconUser from "../assets/Images/user_face.png";
-export const baseUrl = process.env.URL_API;
+export const baseUrl = process.env.REACT_APP_URL_API;
+
 const api = axios.create({ baseURL: baseUrl });
 
 api.interceptors.request.use((config) => {
