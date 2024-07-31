@@ -3,6 +3,7 @@ import authReducer from "./auth/authReducer";
 import userReducer from "./user/infoReducer";
 import messagesReducer from "./user/messageReducer";
 import friendsReducer from "./user/listFriendReducer";
+
 const rootReducer = combineReducers({
   auth: authReducer,
   user: userReducer,

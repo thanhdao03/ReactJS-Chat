@@ -1,0 +1,14 @@
+{
+  "login": {
+    "welcome": "Đăng nhập \n để kết nối",
+    "signUp": "Nếu chưa có tài khoản,\nđăng ký tại đây",
+    "orContinueWith": "Hoặc tiếp tục với",
+    "login": "Đăng nhập",
+    "signUpLink": "Đăng ký"
+  },
+  "register": {
+    "register": "Đăng ký",
+    "alreadyHaveAccount": "Đã có tài khoản, đăng nhập tại",
+    "loginHere": "đây!"
+  }
+}

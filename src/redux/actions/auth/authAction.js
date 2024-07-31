@@ -1,6 +1,6 @@
 import { message } from "antd";
 import * as types from "./constantsAuth";
-import apiRoute from "../../../service/api";
+import apiRoute from "../../../common/helpers/api";
 const errorLog = "Mất kết nối server";
 
 const authAction = {
@@ -12,13 +12,15 @@ const authAction = {
       localStorage.setItem("token", res.data.data.token);
       message.success("Đăng nhập thành công");
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Mất kết nối server";
-      const errorCode = error.response?.status || 500;
-      const messageE = errorLog;
+      // const errorMessage =
+      //   error.response?.data?.message || "Mất kết nối server";
+      // const errorCode = error.response?.status || 500;
+      // const messageE = errorLog;
       dispatch({
+        // type: types.LOGIN_FAILURE,
+        // payload: { message: errorMessage, status: errorCode, error: messageE },
         type: types.LOGIN_FAILURE,
-        payload: { message: errorMessage, status: errorCode, error: messageE },
+        payload: error.message,
       });
     }
   },
@@ -30,13 +32,15 @@ const authAction = {
       localStorage.setItem("token", res.data.data.token);
       message.success("Đăng ký thành công");
     } catch (error) {
-      const errorMessage =
-        error.response?.data?.message || "Mất kết nối server";
-      const errorCode = error.response?.status || 500;
-      const messageB = errorLog;
+      // const errorMessage =
+      //   error.response?.data?.message || "Mất kết nối server";
+      // const errorCode = error.response?.status || 500;
+      // const messageB = errorLog;
       dispatch({
+        // type: types.REGISTER_FAILURE,
+        // payload: { message: errorMessage, status: errorCode, errorB: messageB },
         type: types.REGISTER_FAILURE,
-        payload: { message: errorMessage, status: errorCode, errorB: messageB },
+        payload: error.message,
       });
     }
   },

@@ -10,7 +10,7 @@ import authAction from "../../../redux/actions/auth/authAction";
 import "../../../pages/registerPage/Register.scss";
 import { ButtonRegister } from "../../../common/components/button/buttonRegister";
 import InputField from "../../../common/components/input/registerInputField";
-import LoadingError from "./registerError";
+import LoadingError from "../../../common/components/error/registerError"
 import "./registerForm.scss";
 
 function FormRegister() {

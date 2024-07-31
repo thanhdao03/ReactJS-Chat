@@ -4,7 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import authAction from "../../../redux/actions/auth/authAction";
 import { validateLogin, handleError } from "../../../common/untils/validates";
-import LoginError from "./loginError";
+import LoginError from "../../../common/components/error/loginError"
 import LoginInput from "../../../common/components/input/loginInput";
 import { ButtonLogin } from "../../../common/components/button/buttonLogin";
 import "./loginForm.scss";
@@ -21,6 +21,7 @@ function FormLogin() {
   const dispatch = useDispatch();
 
   const { user, loading, error } = useSelector((state) => state.auth);
+  console.log(error);
   const { login } = authAction;
 
   const handleFocus = (field) => {
@@ -47,6 +48,7 @@ function FormLogin() {
   };
 
   useEffect(() => {
+    console.log(error);
     if (error) {
       if (error.status === 400) {
         setAccError(handleError(error));

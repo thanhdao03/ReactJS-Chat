@@ -16,6 +16,16 @@
   width: 40%;
   margin: 50px 10px 0px 340px;
 }
+.form-register-header {
+  display: flex;
+  margin: 10px 10px;
+  gap: 10px;
+  margin-bottom: 150px;
+  font-size: 17px;
+  & :hover {
+    color: #5186c2;
+  }
+}
 .form-input-register {
   padding: 10px;
   margin: 10px 10px;

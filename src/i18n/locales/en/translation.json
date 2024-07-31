@@ -1,0 +1,14 @@
+{
+  "login": {
+    "welcome": "Login \n to connect",
+    "signUp": "If you don't have an \n account, sign up here",
+    "orContinueWith": "Or continue with",
+    "login": "Login",
+    "signUpLink": "Sign up"
+  },
+  "register": {
+    "register": "Register",
+    "alreadyHaveAccount": "Already have an account? Log in",
+    "loginHere": "here!"
+  }
+}
